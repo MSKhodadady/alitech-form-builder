@@ -49,21 +49,25 @@
         ورود
       </button>
     </form>
+
+    <Alert v-bind="alertProps" />
   </div>
 </template>
 
 <script lang="ts" setup>
+import signInUp from "~/api/signInUp";
+
 const email = ref("");
 const password = ref("");
 const emailErr = ref("");
 const passwordErr = ref("");
 
-const passwordRegex =
-  /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[~`!@#$%^&*()_\-+=:;"'?/\\]).{8,}$/;
-const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
 const requiredText = "لازم است.";
 
-function onSubmit() {
+const { alertProps, showAlert } = useAlert();
+const router = useRouter();
+
+async function onSubmit() {
   emailErr.value = "";
   passwordErr.value = "";
 
@@ -79,7 +83,16 @@ function onSubmit() {
     return;
   }
 
-  alert("success");
+  const res = await signInUp(email.value, password.value);
+
+  if (res == "success") {
+    showAlert("شما با موفقیت وارد شدید.", "success");
+    navigateTo("/");
+  } else if (res == "password-err") {
+    showAlert("رمز یا ایمیل وارد شده اشتباه است.", "danger");
+  } else if (res == "server-err") {
+    showAlert("خطای سرور", "warn");
+  }
 }
 
 watch([email, password], () => {
