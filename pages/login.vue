@@ -87,7 +87,7 @@ async function onSubmit() {
 
   if (res == "success") {
     showAlert("شما با موفقیت وارد شدید.", "success");
-    navigateTo("/");
+    navigateTo(pageRoutes.dashboard);
   } else if (res == "password-err") {
     showAlert("رمز یا ایمیل وارد شده اشتباه است.", "danger");
   } else if (res == "server-err") {
