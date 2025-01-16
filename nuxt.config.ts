@@ -10,5 +10,5 @@ export default defineNuxtConfig({
   },
   tailwindcss: { config: {}, editorSupport: { autocompleteUtil: true } },
 
-  modules: ["@nuxtjs/tailwindcss", "@nuxt/fonts", "@nuxt/icon"],
+  modules: ["@nuxtjs/tailwindcss", "@nuxt/fonts", "@nuxt/icon", "@pinia/nuxt"],
 });

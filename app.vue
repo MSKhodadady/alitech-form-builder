@@ -4,6 +4,8 @@
     <NuxtLayout>
       <NuxtPage />
     </NuxtLayout>
+
+    <Alert />
   </div>
 </template>
 

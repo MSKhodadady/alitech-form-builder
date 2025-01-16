@@ -49,8 +49,6 @@
         ورود
       </button>
     </form>
-
-    <Alert v-bind="alertProps" />
   </div>
 </template>
 
@@ -64,8 +62,7 @@ const passwordErr = ref("");
 
 const requiredText = "لازم است.";
 
-const { alertProps, showAlert } = useAlert();
-const router = useRouter();
+const { showAlert } = useAlertStore();
 
 async function onSubmit() {
   emailErr.value = "";
