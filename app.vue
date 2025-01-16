@@ -1,6 +1,14 @@
 <template>
-  <div>
+  <div dir="rtl" class="bg-[#f9eff0] min-h-screen app-font">
     <NuxtRouteAnnouncer />
-    <NuxtWelcome />
+    <NuxtLayout>
+      <NuxtPage />
+    </NuxtLayout>
   </div>
 </template>
+
+<style>
+.app-font {
+  font-family: "Vazirmatn", sans-serif;
+}
+</style>
