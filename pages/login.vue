@@ -55,6 +55,10 @@
 <script lang="ts" setup>
 import signInUp from "~/api/signInUp";
 
+definePageMeta({
+  layout: false,
+});
+
 const email = ref("");
 const password = ref("");
 const emailErr = ref("");
