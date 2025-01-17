@@ -1,14 +1,20 @@
 <template>
   <div :class="containerClass">
     <p class="mb-1">{{ label }}</p>
-    <div class="rounded-xl border-gray-200 border-2 p-1 flex items-center">
+    <div
+      :class="[
+        'rounded-xl border-gray-200 border-2 p-1 flex items-center',
+        disabled ? 'bg-gray-200' : '',
+      ]"
+    >
       <slot></slot>
       <input
-        class="w-full h-full outline-none"
+        class="w-full h-full outline-none disabled:bg-gray-200"
         :type="
           type != 'password' ? type : revealedPassword ? 'text' : 'password'
         "
         v-model="model"
+        :disabled="disabled"
         v-bind="$attrs"
       />
 
@@ -37,6 +43,7 @@ defineProps<{
   label: string;
   containerClass?: string;
   type?: InputTypeHTMLAttribute;
+  disabled?: boolean;
 }>();
 
 const model = defineModel();

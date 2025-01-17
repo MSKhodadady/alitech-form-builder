@@ -14,9 +14,9 @@
       </div>
     </template>
 
-    <div class="flex flex-col items-stretch w-full">
+    <div class="flex flex-col items-stretch w-full gap-2">
       <!-- title form -->
-      <div class="bg-white rounded-xl flex items-stretch p-3 gap-3">
+      <Section class="flex items-stretch p-3 gap-3">
         <div class="w-[18rem] space-y-3">
           <FormTextInput label="نام فرم" placeholder="یک عنوان برای این فرم" />
 
@@ -32,7 +32,15 @@
             @item-click="(id) => (chosenItem = id)"
           />
         </div>
-      </div>
+      </Section>
+
+      <Section class="p-3" v-if="chosenItem == 'public'">
+        <div class="grid grid-cols-2 grid-rows-2 gap-2 w-2/3">
+          <FormTextInput label="نام خانوادگی" disabled placeholder="پاسخ شما" />
+          <FormTextInput label="نام" disabled placeholder="پاسخ شما" />
+          <FormTextInput label="ایمیل" disabled placeholder="پاسخ شما" />
+        </div>
+      </Section>
     </div>
   </DefaultLayout>
 </template>

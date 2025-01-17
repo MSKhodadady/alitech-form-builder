@@ -48,7 +48,7 @@ onMounted(fetchList);
       </div>
     </template>
 
-    <div class="w-full min-h-[70vh] bg-white rounded-xl">
+    <Section class="w-full min-h-[70vh]">
       <template v-if="loading"> لطفا منتظر بمانید. </template>
 
       <div
@@ -65,6 +65,6 @@ onMounted(fetchList);
       </div>
 
       <template v-else> </template>
-    </div>
+    </Section>
   </DefaultLayout>
 </template>
