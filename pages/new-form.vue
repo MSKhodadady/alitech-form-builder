@@ -1,7 +1,3 @@
-<script setup lang="ts">
-import DefaultLayout from "~/layouts/DefaultLayout.vue";
-</script>
-
 <template>
   <DefaultLayout>
     <template #header>
@@ -9,7 +5,7 @@ import DefaultLayout from "~/layouts/DefaultLayout.vue";
         <span class="text-2xl font-bold drop-shadow-md">فرم ها</span>
       </div>
 
-      <div class="w-full bg-white rounded-xl flex justify-end p-3">
+      <div class="w-full bg-white rounded-xl flex justify-end p-3 mb-3 shadow">
         <FormActionButton class="p-3 flex items-center">
           <Icon name="hugeicons:tick-01" size="20" class="me-2" />
 
@@ -18,13 +14,36 @@ import DefaultLayout from "~/layouts/DefaultLayout.vue";
       </div>
     </template>
 
-    <div class="flex flex-col items-stretch">
+    <div class="flex flex-col items-stretch w-full">
       <!-- title form -->
-      <div class="bg-white rounded-xl flex items-stretch p-3">
-        <div class="w-[18rem]">
+      <div class="bg-white rounded-xl flex items-stretch p-3 gap-3">
+        <div class="w-[18rem] space-y-3">
           <FormTextInput label="نام فرم" placeholder="یک عنوان برای این فرم" />
+
+          <FormTextAreaInput label="توضیحات فرم" rows="5" />
+        </div>
+
+        <div class="w-[14rem]">
+          <FormDropdown
+            label="دسته بندی"
+            class="w-full"
+            :items="categoryItems"
+            :chosen-item="chosenItem"
+            @item-click="(id) => (chosenItem = id)"
+          />
         </div>
       </div>
     </div>
   </DefaultLayout>
 </template>
+
+<script setup lang="ts">
+import DefaultLayout from "~/layouts/DefaultLayout.vue";
+
+const categoryItems = [
+  { text: "عمومی", id: "public" },
+  { text: "خصوصی", id: "private" },
+];
+
+const chosenItem = ref(null as null | string);
+</script>

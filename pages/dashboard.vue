@@ -48,20 +48,21 @@ onMounted(fetchList);
       </div>
     </template>
 
-    <div class="w-full h-full bg-white rounded-xl">
+    <div class="w-full min-h-[70vh] bg-white rounded-xl">
       <template v-if="loading"> لطفا منتظر بمانید. </template>
 
-      <template v-else-if="formList.length == 0">
-        <div class="w-full h-full flex justify-center items-center">
-          <div>
-            هیچ فرمی تا به حال ساخته نشده است.
+      <div
+        v-else-if="formList.length == 0"
+        class="h-[70vh] w-full flex justify-center items-center"
+      >
+        <div>
+          هیچ فرمی تا به حال ساخته نشده است.
 
-            <NuxtLink class="ms-5 text-blue-700" :href="pageRoutes.newForm"
-              >ایجاد فرم</NuxtLink
-            >
-          </div>
+          <NuxtLink class="ms-5 text-blue-700" :href="pageRoutes.newForm"
+            >ایجاد فرم</NuxtLink
+          >
         </div>
-      </template>
+      </div>
 
       <template v-else> </template>
     </div>

@@ -1,7 +1,7 @@
 <template>
   <div class="h-screen w-full flex items-center justify-center">
     <form
-      class="bg-white rounded-xl max-w-sm w-full py-10 px-8 shadow-lg font-bold"
+      class="bg-white rounded-xl max-w-sm w-full py-10 px-8 shadow-md font-bold"
       @submit.prevent="onSubmit"
     >
       <h1 class="text-2xl text-[#300030]">خوش آمدید</h1>
