@@ -1,10 +1,7 @@
 <template>
-  <div dir="rtl" class="bg-[#f9eff0] min-h-screen app-font">
+  <div dir="rtl" class="bg-[#f9eff0] min-h-screen h-fit overflow-auto app-font">
     <NuxtRouteAnnouncer />
-    <NuxtLayout>
-      <NuxtPage />
-    </NuxtLayout>
-
+    <NuxtPage />
     <Alert />
   </div>
 </template>

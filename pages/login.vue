@@ -42,18 +42,16 @@
         >
       </TextInput>
 
-      <button
-        type="submit"
-        class="w-full h-12 text-center bg-[#3e3e3e] text-white rounded-xl"
-      >
+      <ActionButton type="submit" class="w-full h-12 text-center">
         ورود
-      </button>
+      </ActionButton>
     </form>
   </div>
 </template>
 
 <script lang="ts" setup>
 import signInUp from "~/api/signInUp";
+import ActionButton from "~/components/ActionButton.vue";
 
 definePageMeta({
   layout: false,
