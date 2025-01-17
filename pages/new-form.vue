@@ -10,11 +10,11 @@ import DefaultLayout from "~/layouts/DefaultLayout.vue";
       </div>
 
       <div class="w-full bg-white rounded-xl flex justify-end p-3">
-        <ActionButton class="p-3 flex items-center">
+        <FormActionButton class="p-3 flex items-center">
           <Icon name="hugeicons:tick-01" size="20" class="me-2" />
 
           <span>ذخیره فرم</span>
-        </ActionButton>
+        </FormActionButton>
       </div>
     </template>
 
@@ -22,7 +22,7 @@ import DefaultLayout from "~/layouts/DefaultLayout.vue";
       <!-- title form -->
       <div class="bg-white rounded-xl flex items-stretch p-3">
         <div class="w-[18rem]">
-          <TextInput label="نام فرم" placeholder="یک عنوان برای این فرم" />
+          <FormTextInput label="نام فرم" placeholder="یک عنوان برای این فرم" />
         </div>
       </div>
     </div>

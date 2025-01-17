@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { authApiList } from "~/api/authApiList";
 import { NotLoggedInError } from "~/api/authFetch";
+
 import DefaultLayout from "~/layouts/DefaultLayout.vue";
 import type { Forms, FormsRes } from "~/types/Forms";
 
@@ -40,15 +41,14 @@ onMounted(fetchList);
         <span class="text-2xl font-bold drop-shadow-md">فرم ها</span>
 
         <NuxtLink :href="pageRoutes.newForm">
-          <ActionButton class="flex items-center justify-between p-3">
-            <span>+</span>
-            <span>ایجاد فرم</span>
-          </ActionButton>
+          <FormActionButton class="flex items-center justify-between p-3">
+            + ایجاد فرم
+          </FormActionButton>
         </NuxtLink>
       </div>
     </template>
 
-    <div class="w-full h-full bg-white">
+    <div class="w-full h-full bg-white rounded-xl">
       <template v-if="loading"> لطفا منتظر بمانید. </template>
 
       <template v-else-if="formList.length == 0">

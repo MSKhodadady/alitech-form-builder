@@ -10,7 +10,7 @@
         برای ورود، ایمیل و رمز عبور خود را وارد کنید.
       </p>
 
-      <TextInput
+      <FormTextInput
         type="text"
         label="ایمیل"
         container-class="mb-1"
@@ -22,9 +22,9 @@
         <template #err
           ><p class="mt-1 text-red-600 text-xs h-6">{{ emailErr }}</p></template
         >
-      </TextInput>
+      </FormTextInput>
 
-      <TextInput
+      <FormTextInput
         type="password"
         label="رمز عبور"
         container-class="mb-1"
@@ -40,18 +40,17 @@
             {{ passwordErr }}
           </p></template
         >
-      </TextInput>
+      </FormTextInput>
 
-      <ActionButton type="submit" class="w-full h-12 text-center">
+      <FormActionButton type="submit" class="w-full h-12 text-center">
         ورود
-      </ActionButton>
+      </FormActionButton>
     </form>
   </div>
 </template>
 
 <script lang="ts" setup>
 import signInUp from "~/api/signInUp";
-import ActionButton from "~/components/ActionButton.vue";
 
 definePageMeta({
   layout: false,
