@@ -59,10 +59,23 @@
         />
       </template>
       <template v-if="model.type == 'radio'">
-        <FormBuilderPropertyList type="radio" v-model="model.properties" />
+        <FormBuilderPropertyList
+          bullet-type="radio"
+          v-model="model.properties"
+        />
       </template>
-      <template v-if="model.type == 'checkbox'"></template>
-      <template v-if="model.type == 'dropdown'"></template>
+      <template v-if="model.type == 'checkbox'">
+        <FormBuilderPropertyList
+          bullet-type="checkbox"
+          v-model="model.properties"
+        />
+      </template>
+      <template v-if="model.type == 'dropdown'">
+        <FormBuilderPropertyList
+          bullet-type="number"
+          v-model="model.properties"
+        />
+      </template>
       <template v-if="model.type == 'file'"></template>
     </div>
   </AppSection>

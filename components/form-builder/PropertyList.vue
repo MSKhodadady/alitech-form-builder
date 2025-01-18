@@ -4,7 +4,7 @@
     :key="index"
     class="flex items-center gap-2 h-8"
   >
-    <BulletNode :type="type" />
+    <BulletNode :bullet-type="bulletType" :index="index" />
     {{ p }}
     <!-- delete -->
     <FormIconButton
@@ -15,7 +15,7 @@
     />
   </p>
   <form @submit.prevent="addProperty" class="flex items-center gap-2 h-8">
-    <BulletNode :type="type" />
+    <BulletNode :bullet-type="bulletType" />
     <input
       type="text"
       class="w-full h-full outline-none"
@@ -27,27 +27,39 @@
 
 <script setup lang="ts">
 defineProps<{
-  type: "radio" | "checkbox" | "number";
+  bulletType: "radio" | "checkbox" | "number";
 }>();
 const model = defineModel<string[]>({ required: true });
 
 const newProperty = ref("");
 
-const BulletNode = defineComponent<{ index?: number; type: string }>(
+const BulletNode = defineComponent<{ index?: number; bulletType: string }>(
   (props) => {
-    return () => {
-      switch (props.type) {
-        case "radio":
-          return h("span", {
+    return () =>
+      props.bulletType == "radio"
+        ? h("span", {
+            class: "w-3 h-3 border rounded-full border-black",
+          })
+        : props.bulletType == "checkbox"
+        ? h("div", {
+            class: "w-3 h-3 border rounded border-black",
+          })
+        : props.bulletType == "number"
+        ? h(
+            "div",
+            {},
+            `${
+              props.index != undefined
+                ? (props.index + 1).toLocaleString("fa-IR")
+                : "  "
+            } -`
+          )
+        : h("span", {
             class: "w-3 h-3 border rounded-full border-black",
           });
-
-        default:
-          return h("span", {
-            class: "w-3 h-3 border rounded-full border-black",
-          });
-      }
-    };
+  },
+  {
+    props: ["index", "bulletType"],
   }
 );
 
