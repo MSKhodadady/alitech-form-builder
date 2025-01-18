@@ -1,19 +1,27 @@
 let __globalTokenRefresher: undefined | Promise<string> = undefined;
 
+/**
+ * Fetches some url with access token, if the access token is expired, it automatically
+ * fetches new access using refresh token, then runs the fetch again.
+ * You must use this function in `authApiList`, and handle its result with `useHandleAuthFetch`.
+ * @throws `[NotLoggedInError]` if the refresh token is expired.
+ * @param accessTokenNew this is just used internally after fetching new access token.
+ * @returns
+ */
 export async function authFetch(
   P: {
     url: string;
-  } & (
-    | { method: "POST"; body?: any }
-    | { method: "GET"; body?: { [k: string]: string } }
-  ),
+    method: "GET" | "POST";
+    queries?: { [k: string]: string };
+    body?: any;
+  },
   accessTokenNew: string | undefined = undefined
 ) {
   const {
     public: { serverAddress },
   } = useRuntimeConfig();
 
-  const { url, method, body } = P;
+  const { url, method, body, queries } = P;
 
   const accessToken = accessTokenNew
     ? accessTokenNew
@@ -22,14 +30,12 @@ export async function authFetch(
   const endUrl = `${serverAddress}${url}`;
 
   const res = await fetch(
-    method == "GET" && body != undefined
-      ? `${endUrl}?${Object.entries(body)
-          .map(([k, v]) => `${encodeURIComponent(k)}=${encodeURIComponent(v)}`)
-          .join("&")}`
-      : endUrl,
+    `${endUrl}?${Object.entries(queries ?? {})
+      .map(([k, v]) => `${encodeURIComponent(k)}=${encodeURIComponent(v)}`)
+      .join("&")}`,
     {
       method,
-      body: method == "POST" ? body : undefined,
+      body: body ? JSON.stringify(body) : undefined,
       headers: {
         ...(method == "POST" ? { "Content-Type": "application/json" } : {}),
         Authorization: `Bearer ${accessToken}`,

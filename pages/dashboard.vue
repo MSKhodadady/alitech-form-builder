@@ -35,34 +35,17 @@
 
 <script setup lang="ts">
 import { authApiList } from "~/api/authApiList";
-import { NotLoggedInError } from "~/api/authFetch";
-
 import type { Forms, FormsRes } from "~/types/Forms";
 
 const formList = ref<Forms>([]);
-const loading = ref(true);
-const { showAlert } = useAlertStore();
+const { handleAuthFetch, loading } = useHandleAuthFetch();
 
 async function fetchList() {
-  loading.value = true;
+  const res = await handleAuthFetch<FormsRes>(() => authApiList.getAllForms());
 
-  try {
-    const res = await authApiList.getAllForms();
-
-    if (res.ok) {
-      const body: FormsRes = await res.json();
-
-      formList.value = body.data.data;
-    }
-  } catch (error) {
-    if (error instanceof NotLoggedInError) {
-      showAlert("باید دوباره وارد شوید.", "warn");
-
-      navigateTo(pageRoutes.login);
-    }
+  if (res) {
+    formList.value = res.data.data;
   }
-
-  loading.value = false;
 }
 
 onMounted(fetchList);
