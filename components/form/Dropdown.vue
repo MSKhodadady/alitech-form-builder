@@ -1,18 +1,16 @@
 <template>
   <Menu as="div" class="relative">
-    <div>
-      <MenuButton :class="[menuButtonClass, 'w-full']">
-        <p class="mb-1 text-start">{{ label }}</p>
-        <div
-          class="rounded-xl border-gray-200 border-2 p-1 flex items-center justify-between"
-        >
-          <span>{{
-            items.find((i) => i.id == chosenItem)?.text ?? "انتخاب کنید"
-          }}</span>
-          <Icon name="hugeicons:arrow-down-01" />
-        </div>
-      </MenuButton>
-    </div>
+    <MenuButton :class="[menuButtonClass, 'w-full']">
+      <p class="mb-1 text-start" v-if="label">{{ label }}</p>
+      <div
+        class="rounded-xl border-gray-200 border-2 p-1 flex items-center justify-between"
+      >
+        <span>{{
+          items.find((i) => i.id == model)?.text ?? "انتخاب کنید"
+        }}</span>
+        <Icon name="hugeicons:arrow-down-01" />
+      </div>
+    </MenuButton>
 
     <transition
       enter-active-class="transition duration-100 ease-out"
@@ -25,7 +23,7 @@
       <MenuItems
         :class="[
           menuItemContainerClass,
-          'absolute right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-xl bg-white shadow-lg ring-1 ring-black/5 focus:outline-none',
+          'absolute z-50 right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-xl bg-white shadow-lg ring-1 ring-black/5 focus:outline-none',
         ]"
       >
         <div class="px-1 py-1">
@@ -33,7 +31,7 @@
             v-for="item in items"
             v-slot="{ active }"
             :key="item.id"
-            @click="$emit('item-click', item.id)"
+            @click="model = item.id"
           >
             <button
               :class="[
@@ -53,15 +51,12 @@
 <script setup lang="ts">
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/vue";
 
+const model = defineModel<null | string>();
+
 defineProps<{
   menuButtonClass?: string;
   menuItemContainerClass?: string;
   items: { text: string; id: string }[];
-  label: string;
-  chosenItem: string | null;
-}>();
-
-defineEmits<{
-  (e: "item-click", id: string): void;
+  label?: string;
 }>();
 </script>

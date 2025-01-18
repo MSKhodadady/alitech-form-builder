@@ -1,6 +1,6 @@
 <template>
   <div :class="containerClass">
-    <p class="mb-1">{{ label }}</p>
+    <p class="mb-1" v-if="label">{{ label }}</p>
     <div
       :class="[
         'rounded-xl border-gray-200 border-2 p-1 flex items-center',
@@ -40,7 +40,7 @@ defineOptions({
 });
 
 defineProps<{
-  label: string;
+  label?: string;
   containerClass?: string;
   type?: InputTypeHTMLAttribute;
   disabled?: boolean;

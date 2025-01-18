@@ -1,5 +1,6 @@
 {
   "editor.formatOnSave": true,
   "editor.codeActionsOnSave": { "source.organizeImports": "always" },
-  "tailwindCSS.experimental.configFile": ".nuxt/tailwind/postcss.mjs"
+  "tailwindCSS.experimental.configFile": ".nuxt/tailwind/postcss.mjs",
+  "cSpell.words": ["hugeicons"]
 }
