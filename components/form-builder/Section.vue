@@ -58,7 +58,9 @@
           :rows="4"
         />
       </template>
-      <template v-if="model.type == 'radio'"></template>
+      <template v-if="model.type == 'radio'">
+        <FormBuilderPropertyList type="radio" v-model="model.properties" />
+      </template>
       <template v-if="model.type == 'checkbox'"></template>
       <template v-if="model.type == 'dropdown'"></template>
       <template v-if="model.type == 'file'"></template>
