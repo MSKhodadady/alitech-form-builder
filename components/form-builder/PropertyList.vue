@@ -15,7 +15,7 @@
     />
   </p>
   <form @submit.prevent="addProperty" class="flex items-center gap-2 h-8">
-    <BulletNode :bullet-type="bulletType" />
+    <BulletNode :bullet-type="bulletType" :index="model.length" :last="true" />
     <input
       type="text"
       class="w-full h-full outline-none"
@@ -33,7 +33,11 @@ const model = defineModel<string[]>({ required: true });
 
 const newProperty = ref("");
 
-const BulletNode = defineComponent<{ index?: number; bulletType: string }>(
+const BulletNode = defineComponent<{
+  index: number;
+  bulletType: string;
+  last?: boolean;
+}>(
   (props) => {
     return () =>
       props.bulletType == "radio"
@@ -47,19 +51,15 @@ const BulletNode = defineComponent<{ index?: number; bulletType: string }>(
         : props.bulletType == "number"
         ? h(
             "div",
-            {},
-            `${
-              props.index != undefined
-                ? (props.index + 1).toLocaleString("fa-IR")
-                : "  "
-            } -`
+            { class: `${props.last ? "text-gray-400 w-6" : ""} ` },
+            `${(props.index + 1).toLocaleString("fa-IR")} -`
           )
         : h("span", {
             class: "w-3 h-3 border rounded-full border-black",
           });
   },
   {
-    props: ["index", "bulletType"],
+    props: ["index", "bulletType", "last"],
   }
 );
 
