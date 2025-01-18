@@ -1,41 +1,5 @@
-<script setup lang="ts">
-import { authApiList } from "~/api/authApiList";
-import { NotLoggedInError } from "~/api/authFetch";
-
-import DefaultLayout from "~/layouts/DefaultLayout.vue";
-import type { Forms, FormsRes } from "~/types/Forms";
-
-const formList = ref<Forms>([]);
-const loading = ref(true);
-const { showAlert } = useAlertStore();
-
-async function fetchList() {
-  loading.value = true;
-
-  try {
-    const res = await authApiList.getAllForms();
-
-    if (res.ok) {
-      const body: FormsRes = await res.json();
-
-      formList.value = body.data.data;
-    }
-  } catch (error) {
-    if (error instanceof NotLoggedInError) {
-      showAlert("باید دوباره وارد شوید.", "warn");
-
-      navigateTo(pageRoutes.login);
-    }
-  }
-
-  loading.value = false;
-}
-
-onMounted(fetchList);
-</script>
-
 <template>
-  <DefaultLayout>
+  <LayoutDefault>
     <template #header>
       <div class="flex justify-between items-center mb-10">
         <span class="text-2xl font-bold drop-shadow-md">فرم ها</span>
@@ -66,5 +30,40 @@ onMounted(fetchList);
 
       <template v-else> </template>
     </Section>
-  </DefaultLayout>
+  </LayoutDefault>
 </template>
+
+<script setup lang="ts">
+import { authApiList } from "~/api/authApiList";
+import { NotLoggedInError } from "~/api/authFetch";
+
+import type { Forms, FormsRes } from "~/types/Forms";
+
+const formList = ref<Forms>([]);
+const loading = ref(true);
+const { showAlert } = useAlertStore();
+
+async function fetchList() {
+  loading.value = true;
+
+  try {
+    const res = await authApiList.getAllForms();
+
+    if (res.ok) {
+      const body: FormsRes = await res.json();
+
+      formList.value = body.data.data;
+    }
+  } catch (error) {
+    if (error instanceof NotLoggedInError) {
+      showAlert("باید دوباره وارد شوید.", "warn");
+
+      navigateTo(pageRoutes.login);
+    }
+  }
+
+  loading.value = false;
+}
+
+onMounted(fetchList);
+</script>

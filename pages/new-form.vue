@@ -1,5 +1,5 @@
 <template>
-  <DefaultLayout>
+  <LayoutDefault>
     <template #header>
       <div class="mb-6">
         <span class="text-2xl font-bold drop-shadow-md">فرم ها</span>
@@ -66,11 +66,10 @@
         + پرسش جدید
       </BouncingBtn>
     </div>
-  </DefaultLayout>
+  </LayoutDefault>
 </template>
 
 <script setup lang="ts">
-import DefaultLayout from "~/layouts/DefaultLayout.vue";
 import type { FormBuilderSectionType } from "~/types/FormBuilderSection";
 
 const categoryItems = [
