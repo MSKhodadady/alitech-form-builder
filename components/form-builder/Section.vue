@@ -76,7 +76,16 @@
           v-model="model.properties"
         />
       </template>
-      <template v-if="model.type == 'file'"></template>
+      <template v-if="model.type == 'file'">
+        <AppSection
+          class="w-full h-full flex flex-col gap-2 items-center justify-center py-10"
+        >
+          <BouncingBtn class="border rounded-xl py-1 px-3 shadow" type="button"
+            >افزودن فایل</BouncingBtn
+          >
+          <p>فرمت های قابل قبول: JPG, PNG, PDF</p>
+        </AppSection>
+      </template>
     </div>
   </AppSection>
 </template>
