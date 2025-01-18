@@ -1,6 +1,6 @@
 <template>
   <AppSection>
-    <div class="flex justify-between">
+    <div class="flex justify-between w-full">
       <!--  -->
       <div class="flex gap-2">
         <FormTextInput placeholder="عنوان پرسش" v-model="model.title" />
@@ -29,17 +29,39 @@
           <FormIconButton
             type="button"
             icon-name="hugeicons:arrow-up-02"
-            :disabled="position == 'first'"
+            :disabled="position == 'first' || position == 'just'"
             @click="$emit('move-up')"
           />
           <FormIconButton
             type="button"
             icon-name="hugeicons:arrow-down-02"
-            :disabled="position == 'last'"
+            :disabled="position == 'last' || position == 'just'"
             @click="$emit('move-down')"
           />
         </div>
       </div>
+    </div>
+
+    <div class="w-full py-4">
+      <template v-if="model.type == 'text'">
+        <FormTextInput
+          disabled
+          placeholder="پاسخ شما"
+          container-class="w-[18rem]"
+        />
+      </template>
+      <template v-if="model.type == 'textarea'">
+        <FormTextAreaInput
+          disabled
+          placeholder="پاسخ شما"
+          container-class="w-full"
+          :rows="4"
+        />
+      </template>
+      <template v-if="model.type == 'radio'"></template>
+      <template v-if="model.type == 'checkbox'"></template>
+      <template v-if="model.type == 'dropdown'"></template>
+      <template v-if="model.type == 'file'"></template>
     </div>
   </AppSection>
 </template>
@@ -58,7 +80,7 @@ const questionTypes = [
 ];
 
 defineProps<{
-  position?: "first" | "last";
+  position?: "first" | "last" | "just";
 }>();
 defineEmits(["move-up", "move-down", "delete", "copy"]);
 const model = defineModel<FormBuilderSectionType>({ required: true });

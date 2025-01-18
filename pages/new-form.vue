@@ -46,7 +46,9 @@
         v-model="formItems[index]"
         :position="
           index == 0
-            ? 'first'
+            ? formItems.length == 1
+              ? 'just'
+              : 'first'
             : index == formItems.length - 1
             ? 'last'
             : undefined
