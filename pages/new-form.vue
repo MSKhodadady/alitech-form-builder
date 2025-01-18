@@ -51,7 +51,11 @@
             ? 'last'
             : undefined
         "
-        :key="index"
+        :key="i.key"
+        @delete="formItemDelete(index)"
+        @copy="formItemCopy(index)"
+        @move-up="formItemUp(index)"
+        @move-down="formItemDown(index)"
       />
 
       <BouncingBtn
@@ -76,7 +80,8 @@ const categoryItems = [
 
 const chosenCategoryId = ref(null as null | string);
 
-const formItems = ref<FormBuilderSectionType[]>([]);
+const formItems = ref<(FormBuilderSectionType & { key: number })[]>([]);
+const formItemKeyCounter = ref(0);
 
 function addNewFormItem() {
   formItems.value.push({
@@ -84,6 +89,34 @@ function addNewFormItem() {
     properties: [],
     required: false,
     type: null,
+    key: formItemKeyCounter.value,
   });
+
+  formItemKeyCounter.value++;
+}
+function formItemUp(index: number) {
+  formItems.value = [
+    ...formItems.value.slice(0, index - 1),
+    { ...formItems.value[index] },
+    { ...formItems.value[index - 1] },
+    ...formItems.value.slice(index + 1),
+  ];
+}
+function formItemDown(index: number) {
+  formItems.value = [
+    ...formItems.value.slice(0, index),
+    { ...formItems.value[index + 1] },
+    { ...formItems.value[index] },
+    ...formItems.value.slice(index + 2),
+  ];
+}
+function formItemDelete(index: number) {
+  formItems.value.splice(index, 1);
+}
+function formItemCopy(index: number) {
+  const k = formItems.value[index];
+  formItems.value.splice(index + 1, 0, { ...k, key: formItemKeyCounter.value });
+
+  formItemKeyCounter.value++;
 }
 </script>

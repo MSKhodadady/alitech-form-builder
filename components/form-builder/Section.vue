@@ -14,17 +14,29 @@
       <div class="flex gap-1 items-center">
         <FormSwitch v-model="model.required" />
 
-        <FormIconButton icon-name="hugeicons:delete-01" />
-        <FormIconButton icon-name="hugeicons:copy-01" />
+        <FormIconButton
+          icon-name="hugeicons:delete-01"
+          type="button"
+          @click="$emit('delete')"
+        />
+        <FormIconButton
+          icon-name="hugeicons:copy-01"
+          type="button"
+          @click="$emit('copy')"
+        />
 
         <div class="flex rounded-xl overflow-clip">
           <FormIconButton
+            type="button"
             icon-name="hugeicons:arrow-up-02"
             :disabled="position == 'first'"
+            @click="$emit('move-up')"
           />
           <FormIconButton
+            type="button"
             icon-name="hugeicons:arrow-down-02"
             :disabled="position == 'last'"
+            @click="$emit('move-down')"
           />
         </div>
       </div>
@@ -48,6 +60,6 @@ const questionTypes = [
 defineProps<{
   position?: "first" | "last";
 }>();
-
+defineEmits(["move-up", "move-down", "delete", "copy"]);
 const model = defineModel<FormBuilderSectionType>({ required: true });
 </script>
