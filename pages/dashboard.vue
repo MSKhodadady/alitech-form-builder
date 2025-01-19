@@ -32,7 +32,7 @@
 
       <template v-else>
         <div class="grid grid-cols-3 gap-3">
-          <FormCard
+          <FormBuilderCard
             v-for="i in currentPageData()"
             :key="i.form_id"
             :name="i.form_title"
