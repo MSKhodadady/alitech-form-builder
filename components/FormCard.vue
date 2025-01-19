@@ -6,7 +6,7 @@
 
     <p class="text-gray-400">{{ created }}</p>
 
-    <NuxtLink>
+    <NuxtLink :href="pageRoutes.form(formId)">
       <BouncingBtn
         :class="[
           'w-full  py-1 flex justify-center items-center gap-2',
@@ -25,5 +25,6 @@ defineProps<{
   name: string;
   created: string;
   link: string;
+  formId: string;
 }>();
 </script>

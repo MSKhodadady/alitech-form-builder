@@ -34,10 +34,11 @@
         <div class="grid grid-cols-3 gap-3">
           <FormCard
             v-for="i in currentPageData()"
+            :key="i.form_id"
             :name="i.form_title"
             :created="secondsToPerDateStr(i.created_at)"
             :link="i.form_title"
-            :key="i.form_id"
+            :form-id="i.form_id"
           />
         </div>
 

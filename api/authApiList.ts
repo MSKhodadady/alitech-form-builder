@@ -19,4 +19,12 @@ export const authApiList = {
       body,
     });
   },
+
+  getForm(form_id: string) {
+    return getAuthFetchQueue().fetcher({
+      url: "/main/main/form",
+      method: "GET",
+      queries: { form_id },
+    });
+  },
 };
