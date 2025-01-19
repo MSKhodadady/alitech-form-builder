@@ -16,7 +16,7 @@
           class="p-3 flex items-center"
           white
           :disabled="loading"
-          @click="$emit('delete')"
+          @click="confirmDeleteDialog?.showModal()"
         >
           <Icon name="hugeicons:delete-01" size="20" class="me-2" />
           <span>حذف فرم</span>
@@ -103,6 +103,32 @@
         + پرسش جدید
       </BouncingBtn>
     </div>
+
+    <dialog
+      ref="confirm-delete-dialog"
+      :class="[
+        defaultBorder,
+        'fixed bg-white top-0 left-0 py-5 px-10 max-w-lg w-full',
+      ]"
+    >
+      آیا مطمئن هستید؟
+      <div class="flex justify-end gap-3">
+        <FormActionButton
+          white
+          class="py-2 px-5"
+          @click="
+            confirmDeleteDialog?.close();
+            $emit('delete');
+          "
+          >بله</FormActionButton
+        >
+        <FormActionButton
+          class="py-2 px-5"
+          @click="confirmDeleteDialog?.close()"
+          >خیر</FormActionButton
+        >
+      </div>
+    </dialog>
   </LayoutDefault>
 </template>
 
@@ -126,6 +152,7 @@ const props = defineProps<{
 const emit = defineEmits(["submit", "delete"]);
 const editMode = () => props.formId != null;
 const showErrs = ref(false);
+const confirmDeleteDialog = useTemplateRef("confirm-delete-dialog");
 
 //: init model values for sure
 onMounted(() => {

@@ -6,6 +6,7 @@
       :submit-disabled="notChanged"
       :loading="loading"
       @submit="onSubmit"
+      @delete="onDelete"
     />
   </template>
 </template>
@@ -100,6 +101,17 @@ async function onSubmit() {
 
   if (res && res.ok) {
     showAlert("تغییرات با موفقیت ذخیره شدند.", "success");
+    navigateTo(pageRoutes.dashboard);
+  }
+}
+
+async function onDelete() {
+  const res = await handleAuthFetch<ResponseShapeSuccess>(() =>
+    authApiList.deleteForm(formId)
+  );
+
+  if (res && res.ok) {
+    showAlert("فرم با موفقیت حذف شد.", "success");
     navigateTo(pageRoutes.dashboard);
   }
 }

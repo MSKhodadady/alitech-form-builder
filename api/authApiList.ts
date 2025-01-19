@@ -36,4 +36,12 @@ export const authApiList = {
       body,
     });
   },
+
+  deleteForm(form_id: string) {
+    return getAuthFetchQueue().fetcher({
+      url: "/main/main/form",
+      method: "DELETE",
+      queries: { form_id },
+    });
+  },
 };
