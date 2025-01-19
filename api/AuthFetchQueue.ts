@@ -1,6 +1,6 @@
 export type FetchOptions = {
   url: string;
-  method: "GET" | "POST";
+  method: "GET" | "POST" | "PUT" | "DELETE";
   queries?: { [k: string]: string };
   body?: any;
 };

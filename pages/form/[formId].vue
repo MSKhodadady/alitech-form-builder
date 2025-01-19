@@ -4,13 +4,15 @@
       v-model="newForm"
       :form-id="formId"
       :submit-disabled="notChanged"
+      :loading="loading"
+      @submit="onSubmit"
     />
   </template>
 </template>
 
 <script setup lang="ts">
 import { authApiList } from "~/api/authApiList";
-import type { FormBuilderModel } from "~/types/FormBuilder";
+import type { EditFormBuilderModel, FromBuilder } from "~/types/FormBuilder";
 import type { Form } from "~/types/serverData/Forms";
 import type { ResponseShapeSuccess } from "~/types/serverData/ResponseShape";
 
@@ -25,9 +27,9 @@ const route = useRoute();
 const { formId } = route.params as { formId: string };
 
 const initForm = ref<Form | null>(null);
-const newForm = ref<FormBuilderModel | null>(null);
+const newForm = ref<EditFormBuilderModel | null>(null);
 
-const { handleAuthFetch, loading } = useHandleAuthFetch();
+const { handleAuthFetch, loading, showAlert } = useHandleAuthFetch();
 
 onMounted(async () => {
   const f = await handleAuthFetch<ResponseShapeSuccess<Form>>(() =>
@@ -83,5 +85,22 @@ const notChanged = computed(() => {
   );
 });
 
-function onSubmit() {}
+async function onSubmit() {
+  if (newForm.value == null || notChanged.value) return;
+
+  const { formItemKeyCounter, sections, ...other } = newForm.value;
+  const body: FromBuilder = {
+    ...other,
+    sections: sections.map(({ key, ...other }) => other),
+  };
+
+  const res = await handleAuthFetch<ResponseShapeSuccess>(() =>
+    authApiList.updateForm(formId, body)
+  );
+
+  if (res && res.ok) {
+    showAlert("تغییرات با موفقیت ذخیره شدند.", "success");
+    navigateTo(pageRoutes.dashboard);
+  }
+}
 </script>

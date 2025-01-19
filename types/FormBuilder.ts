@@ -17,3 +17,7 @@ export type FormBuilderModel = {
    */
   formItemKeyCounter: number;
 };
+
+export type EditFormBuilderModel = Omit<FormBuilderModel, "form_type"> & {
+  form_type: "public" | "private";
+};

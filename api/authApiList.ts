@@ -27,4 +27,13 @@ export const authApiList = {
       queries: { form_id },
     });
   },
+
+  updateForm(form_id: string, body: FromBuilder) {
+    return getAuthFetchQueue().fetcher({
+      url: "/main/main/form",
+      method: "PUT",
+      queries: { form_id },
+      body,
+    });
+  },
 };
