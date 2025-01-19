@@ -97,7 +97,7 @@ class AuthFetchQueue {
         method,
         body: body ? JSON.stringify(body) : undefined,
         headers: {
-          ...(method == "POST" ? { "Content-Type": "application/json" } : {}),
+          ...(body != undefined ? { "Content-Type": "application/json" } : {}),
           Authorization: `Bearer ${accessToken}`,
         },
       }
