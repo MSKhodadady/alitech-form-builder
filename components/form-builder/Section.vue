@@ -92,7 +92,7 @@
 
 <script setup lang="ts">
 import { Section as AppSection } from "#components";
-import type { FormBuilderSectionType } from "~/types/FormBuilderSection";
+import type { FormBuilderSection } from "~/types/FormBuilderSection";
 
 const questionTypes = [
   { text: "پاسخ کوتاه", id: "text" },
@@ -107,5 +107,5 @@ defineProps<{
   position?: "first" | "last" | "just";
 }>();
 defineEmits(["move-up", "move-down", "delete", "copy"]);
-const model = defineModel<FormBuilderSectionType>({ required: true });
+const model = defineModel<FormBuilderSection>({ required: true });
 </script>

@@ -1,4 +1,4 @@
-import type { FormBuilderType } from "~/types/FormBuilderSection";
+import type { FromBuilder } from "~/types/FormBuilder";
 import { authFetch } from "./authFetch";
 
 /**
@@ -12,7 +12,7 @@ export const authApiList = {
     });
   },
 
-  createForm(body: FormBuilderType) {
+  createForm(body: FromBuilder) {
     return authFetch({
       url: "/main/main/form",
       method: "POST",

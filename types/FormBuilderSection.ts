@@ -1,6 +1,14 @@
-export type FormBuilderSectionType = {
+export type FormBuilderSection = {
   title: string;
-  type: null | string;
+  type: string;
   required: boolean;
   properties: string[];
 };
+
+export type FormBuilderSectionType =
+  | "text"
+  | "textarea"
+  | "radio"
+  | "checkbox"
+  | "dropdown"
+  | "file";

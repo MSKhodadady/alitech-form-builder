@@ -1,7 +1,7 @@
 import { NotLoggedInError } from "~/api/authFetch";
 
 export function useHandleAuthFetch() {
-  const loading = ref(true);
+  const loading = ref(false);
   const { showAlert } = useAlertStore();
 
   async function handleAuthFetch<T>(
@@ -38,6 +38,7 @@ export function useHandleAuthFetch() {
 
   return {
     handleAuthFetch,
+    showAlert,
     loading,
   };
 }
