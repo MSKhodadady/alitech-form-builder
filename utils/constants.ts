@@ -5,3 +5,5 @@ export const passwordRegex =
 export const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
 
 export const defaultBorder = "rounded-xl border-gray-200 border";
+
+export const FORMS_PAGE_COUNT = 6;

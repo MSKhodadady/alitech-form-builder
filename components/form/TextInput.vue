@@ -3,7 +3,8 @@
     <p class="mb-1" v-if="label">{{ label }}</p>
     <div
       :class="[
-        'rounded-xl border-gray-200 border-2 p-1 flex items-center',
+        defaultBorder,
+        'p-1 flex items-center',
         disabled ? 'bg-gray-200' : '',
       ]"
     >
