@@ -46,7 +46,7 @@
           <FormIconButton
             icon-name="hugeicons:arrow-right-01"
             :class="defaultBorder"
-            @click="page--"
+            @click="movePage(page - 1)"
           />
           <form @submit.prevent="setPage">
             <FormTextInput
@@ -62,7 +62,7 @@
           <FormIconButton
             icon-name="hugeicons:arrow-left-01"
             :class="defaultBorder"
-            @click="page++"
+            @click="movePage(page + 1)"
           />
         </div>
       </template>
@@ -85,6 +85,13 @@ const currentPageData = () =>
 const pageField = ref(page.value);
 const { handleAuthFetch, loading } = useHandleAuthFetch(true);
 const totalPages = ref(0);
+
+function movePage(np: number) {
+  if (np <= totalPages.value && np > 0) {
+    page.value = np;
+    pageField.value = np;
+  }
+}
 
 function setPage() {
   if (pageField.value > totalPages.value || pageField.value < 0) {
