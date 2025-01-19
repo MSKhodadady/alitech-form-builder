@@ -1,4 +1,4 @@
-import type { SignUpRes, SignUpResErr } from "~/types/SignUpRes";
+import type { SignUpRes, SignUpResErr } from "~/types/serverData/SignUpRes";
 
 export default async function signInUp(email: string, password: string) {
   const {

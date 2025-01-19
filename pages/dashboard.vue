@@ -35,7 +35,7 @@
 
 <script setup lang="ts">
 import { authApiList } from "~/api/authApiList";
-import type { Forms, FormsRes } from "~/types/Forms";
+import type { Forms, FormsRes } from "~/types/serverData/Forms";
 
 const formList = ref<Forms>([]);
 const { handleAuthFetch, loading } = useHandleAuthFetch();
