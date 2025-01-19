@@ -6,3 +6,14 @@ export type FromBuilder = {
   description: string;
   sections: FormBuilderSection[];
 };
+
+export type FormBuilderModel = {
+  form_title: string;
+  description: string;
+  form_type: null | string;
+  sections: (FormBuilderSection & { key: number })[];
+  /**
+   * used for settings keys for `v-for`, when adding new item
+   */
+  formItemKeyCounter: number;
+};

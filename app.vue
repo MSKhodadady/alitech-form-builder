@@ -13,7 +13,7 @@ useHead({
   titleTemplate: (t) => `${t} - آلیاتک`,
 });
 
-initAuthFetchQueue(true);
+initAuthFetchQueue();
 </script>
 
 <style>

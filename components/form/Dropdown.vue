@@ -1,9 +1,12 @@
 <template>
   <Menu as="div" class="relative">
-    <MenuButton :class="[menuButtonClass, 'w-full']">
+    <MenuButton :class="[menuButtonClass, 'w-full']" :disabled="disabled">
       <p class="mb-1 text-start" v-if="label">{{ label }}</p>
       <div
-        class="rounded-xl border-gray-200 border-2 p-1 flex items-center justify-between"
+        :class="[
+          'rounded-xl border-gray-200 border-2 p-1 flex items-center justify-between',
+          disabled ? 'bg-gray-200' : '',
+        ]"
       >
         <span>{{
           items.find((i) => i.id == model)?.text ?? "انتخاب کنید"
@@ -58,5 +61,6 @@ defineProps<{
   menuItemContainerClass?: string;
   items: { text: string; id: string }[];
   label?: string;
+  disabled?: boolean;
 }>();
 </script>
