@@ -6,6 +6,12 @@
   </div>
 </template>
 
+<script setup lang="ts">
+useHead({
+  titleTemplate: (t) => `${t} - آلیاتک`,
+});
+</script>
+
 <style>
 .app-font {
   font-family: "Vazirmatn", sans-serif;

@@ -47,6 +47,10 @@
 import { authApiList } from "~/api/authApiList";
 import type { Form, FormsResp } from "~/types/serverData/Forms";
 
+useHead({
+  title: "داشبورد",
+});
+
 const formList = ref<Form[]>([]);
 const { handleAuthFetch, loading } = useHandleAuthFetch();
 

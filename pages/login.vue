@@ -52,6 +52,10 @@
 <script lang="ts" setup>
 import signInUp from "~/api/signInUp";
 
+useHead({
+  title: "ورود",
+});
+
 definePageMeta({
   layout: false,
 });

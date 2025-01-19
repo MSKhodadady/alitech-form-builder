@@ -13,6 +13,9 @@
 </template>
 
 <script setup lang="ts">
+useHead({
+  title: "خانه",
+});
 const {
   public: { serverAddress },
 } = useRuntimeConfig();

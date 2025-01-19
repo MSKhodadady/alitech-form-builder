@@ -94,6 +94,10 @@
 import { authApiList } from "~/api/authApiList";
 import type { FormBuilderSection } from "~/types/FormBuilderSection";
 
+useHead({
+  title: "ساخت فرم",
+});
+
 const categoryItems = [
   { text: "عمومی", id: "public" },
   { text: "خصوصی", id: "private" },
