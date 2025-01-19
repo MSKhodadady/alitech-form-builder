@@ -12,24 +12,26 @@
       </div>
     </template>
 
-    <Section class="w-full min-h-[70vh]">
+    <Section
+      :class="[
+        'w-full h-max min-h-[70vh] ',
+        loading || formList.length == 0
+          ? 'flex justify-center  items-center'
+          : 'flex flex-col items-stretch gap-16 justify-between',
+      ]"
+    >
       <template v-if="loading"> لطفا منتظر بمانید. </template>
 
-      <div
-        v-else-if="formList.length == 0"
-        class="h-[70vh] w-full flex justify-center items-center"
-      >
-        <div>
-          هیچ فرمی تا به حال ساخته نشده است.
+      <div v-else-if="formList.length == 0">
+        هیچ فرمی تا به حال ساخته نشده است.
 
-          <NuxtLink class="ms-5 text-blue-700" :href="pageRoutes.newForm"
-            >ایجاد فرم</NuxtLink
-          >
-        </div>
+        <NuxtLink class="ms-5 text-blue-700" :href="pageRoutes.newForm"
+          >ایجاد فرم</NuxtLink
+        >
       </div>
 
       <template v-else>
-        <div class="grid grid-cols-3 gap-3 mb-16">
+        <div class="grid grid-cols-3 gap-3">
           <FormCard
             v-for="i in currentPageData()"
             :name="i.form_title"
