@@ -108,6 +108,7 @@ class AuthFetchQueue {
 
       if (newAccessToken == "not-logged-in") {
         fetchReject(new NotLoggedInError());
+        this.#clearQueue();
         return;
       }
 
@@ -159,14 +160,15 @@ class AuthFetchQueue {
         return "error";
       }
     } catch (error) {
-      if (error instanceof NotLoggedInError) {
-        throw error;
-      } else {
-        errLog(`AuthFetchQueue-refreshToken`, error);
-
-        return "error";
-      }
+      errLog(`AuthFetchQueue-refreshToken`, error);
+      return "error";
     }
+  }
+
+  #clearQueue() {
+    this.#queue.map((i) => i.fetchReject(new NotLoggedInError()));
+
+    this.#queue = [];
   }
 }
 
