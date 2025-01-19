@@ -3,6 +3,7 @@
     <Section class="w-full flex gap-3 justify-end p-3 mb-3 shadow !border-none">
       <FormActionButton
         class="p-3 flex items-center"
+        v-if="editMode()"
         white
         :disabled="loading"
         @click="confirmDeleteDialog?.showModal()"
