@@ -1,16 +1,10 @@
-export type SignUpRes = {
-  ok: true;
-  status: 200;
-  data: {
-    access: string;
-    refresh: string;
-  };
-};
+import type { ResponseShapeError, ResponseShapeSuccess } from "./ResponseShape";
 
-export type SignUpResErr = {
-  ok: false;
-  status: number;
-  error: {
-    detail: "IncorrectPassword" | string;
-  };
-};
+export type SignUpRes = ResponseShapeSuccess<{
+  access: string;
+  refresh: string;
+}>;
+
+export type SignUpResErr = ResponseShapeError<{
+  detail: "IncorrectPassword" | string;
+}>;

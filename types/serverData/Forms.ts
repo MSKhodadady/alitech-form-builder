@@ -1,10 +1,16 @@
-export type FormsRes = {
-  ok: boolean;
-  status: number;
-  data: {
-    totla_quantity: number;
-    data: Forms;
-  };
-};
+import type { FormBuilderSection } from "../FormBuilderSection";
+import type { ResponseShapeSuccess } from "./ResponseShape";
 
-export type Forms = any[];
+export type FormsResp = ResponseShapeSuccess<{
+  totla_quantity: number;
+  data: Form[];
+}>;
+
+export type Form = {
+  form_id: string;
+  form_type: "public" | "private";
+  form_title: string;
+  description: string;
+  sections: FormBuilderSection[];
+  created_at: number; // seconds
+};

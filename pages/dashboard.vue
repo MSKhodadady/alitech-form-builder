@@ -28,20 +28,30 @@
         </div>
       </div>
 
-      <template v-else> </template>
+      <template v-else>
+        <div class="grid grid-cols-3 gap-3">
+          <FormCard
+            v-for="i in formList"
+            :name="i.form_title"
+            :created="secondsToPerDateStr(i.created_at)"
+            :link="i.form_title"
+            :key="i.form_id"
+          />
+        </div>
+      </template>
     </Section>
   </LayoutDefault>
 </template>
 
 <script setup lang="ts">
 import { authApiList } from "~/api/authApiList";
-import type { Forms, FormsRes } from "~/types/serverData/Forms";
+import type { Form, FormsResp } from "~/types/serverData/Forms";
 
-const formList = ref<Forms>([]);
+const formList = ref<Form[]>([]);
 const { handleAuthFetch, loading } = useHandleAuthFetch();
 
 async function fetchList() {
-  const res = await handleAuthFetch<FormsRes>(() => authApiList.getAllForms());
+  const res = await handleAuthFetch<FormsResp>(() => authApiList.getAllForms());
 
   if (res) {
     formList.value = res.data.data;

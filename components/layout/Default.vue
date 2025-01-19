@@ -1,5 +1,5 @@
 <template>
-  <div class="py-10 max-w-4xl m-auto">
+  <div class="py-10 max-w-4xl m-auto px-2">
     <slot name="header"></slot>
     <div class="rounded-xl w-full h-full">
       <slot></slot>
