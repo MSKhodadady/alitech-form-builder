@@ -7,9 +7,13 @@
 </template>
 
 <script setup lang="ts">
+import { initAuthFetchQueue } from "./api/AuthFetchQueue";
+
 useHead({
   titleTemplate: (t) => `${t} - آلیاتک`,
 });
+
+initAuthFetchQueue(true);
 </script>
 
 <style>

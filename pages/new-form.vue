@@ -19,6 +19,13 @@
     </template>
 
     <div class="flex flex-col items-stretch w-full gap-2">
+      <Section v-if="showErrs && checkErrors.length > 0">
+        <h1 class="text-2xl">خطا ها</h1>
+        <ul class="text-red-500 list-disc ps-5">
+          <li v-for="i in checkErrors">{{ i }}</li>
+        </ul>
+      </Section>
+
       <!-- title form -->
       <Section class="flex items-stretch gap-3">
         <div class="w-[18rem] space-y-3">
@@ -71,13 +78,6 @@
         @move-up="formItemAction.up(index)"
         @move-down="formItemAction.down(index)"
       />
-
-      <Section v-if="showErrs && checkErrors.length > 0">
-        <h1 class="text-2xl">خطا ها</h1>
-        <ul class="text-red-500 list-disc ps-5">
-          <li v-for="i in checkErrors">{{ i }}</li>
-        </ul>
-      </Section>
 
       <BouncingBtn
         type="button"

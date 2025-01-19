@@ -1,4 +1,5 @@
 import type { SignUpRes, SignUpResErr } from "~/types/serverData/SignUpRes";
+import { getAuthFetchQueue } from "./AuthFetchQueue";
 
 export default async function signInUp(email: string, password: string) {
   const {
@@ -36,6 +37,7 @@ export default async function signInUp(email: string, password: string) {
 
       localStorage.setItem(REFRESH_TOKEN_KEY, refresh);
       localStorage.setItem(ACCESS_TOKEN_KEY, access);
+      getAuthFetchQueue().setAccessToken(access);
 
       return "success";
     } else {

@@ -1,7 +1,7 @@
-import { NotLoggedInError } from "~/api/authFetch";
+import { NotLoggedInError } from "~/api/AuthFetchQueue";
 
-export function useHandleAuthFetch() {
-  const loading = ref(false);
+export function useHandleAuthFetch(loadingInit = false) {
+  const loading = ref(loadingInit);
   const { showAlert } = useAlertStore();
 
   async function handleAuthFetch<T>(

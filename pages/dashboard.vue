@@ -52,7 +52,7 @@ useHead({
 });
 
 const formList = ref<Form[]>([]);
-const { handleAuthFetch, loading } = useHandleAuthFetch();
+const { handleAuthFetch, loading } = useHandleAuthFetch(true);
 
 async function fetchList() {
   const res = await handleAuthFetch<FormsResp>(() => authApiList.getAllForms());
