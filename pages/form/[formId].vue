@@ -1,14 +1,26 @@
 <template>
-  <template v-if="newForm">
-    <FormBuilder
-      v-model="newForm"
-      :form-id="formId"
-      :submit-disabled="notChanged"
-      :loading="loading"
-      @submit="onSubmit"
-      @delete="onDelete"
-    />
-  </template>
+  <LayoutDefault>
+    <template #header>
+      <div class="mb-6">
+        <span class="text-2xl font-bold drop-shadow-md"> ویرایش فرم </span>
+      </div>
+    </template>
+    <template #default>
+      <template v-if="newForm">
+        <FormBuilder
+          v-model="newForm"
+          :form-id="formId"
+          :submit-disabled="notChanged"
+          :loading="loading"
+          @submit="onSubmit"
+          @delete="onDelete"
+        />
+      </template>
+      <template v-else>
+        <Section class="w-full !border-none"> لطفا صبر کنید. </Section>
+      </template>
+    </template>
+  </LayoutDefault>
 </template>
 
 <script setup lang="ts">

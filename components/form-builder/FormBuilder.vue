@@ -1,135 +1,118 @@
 <template>
-  <LayoutDefault>
-    <template #header>
-      <div class="mb-6">
-        <span class="text-2xl font-bold drop-shadow-md">
-          <template v-if="editMode()"> ویرایش فرم </template>
+  <div class="flex flex-col items-stretch w-full gap-2">
+    <Section class="w-full flex gap-3 justify-end p-3 mb-3 shadow !border-none">
+      <FormActionButton
+        class="p-3 flex items-center"
+        white
+        :disabled="loading"
+        @click="confirmDeleteDialog?.showModal()"
+      >
+        <Icon name="hugeicons:delete-01" size="20" class="me-2" />
+        <span>حذف فرم</span>
+      </FormActionButton>
+      <FormActionButton
+        class="p-3 flex items-center"
+        @click="submitForm"
+        :disabled="loading || submitDisabled"
+      >
+        <Icon name="hugeicons:tick-01" size="20" class="me-2" />
 
-          <template v-else> ساخت فرم </template>
-        </span>
+        <span>ذخیره فرم</span>
+      </FormActionButton>
+    </Section>
+    <Section v-if="showErrs && checkErrors.length > 0">
+      <h1 class="text-2xl">خطا ها</h1>
+      <ul class="text-red-500 list-disc ps-5">
+        <li v-for="i in checkErrors">{{ i }}</li>
+      </ul>
+    </Section>
+
+    <!-- title form -->
+    <Section class="flex items-stretch gap-3">
+      <div class="w-[18rem] space-y-3">
+        <FormTextInput
+          label="نام فرم"
+          placeholder="یک عنوان برای این فرم"
+          v-model="model.form_title"
+        />
+
+        <FormTextAreaInput
+          label="توضیحات فرم"
+          rows="5"
+          v-model="model.description"
+        />
       </div>
 
-      <div
-        class="w-full bg-white rounded-xl flex gap-3 justify-end p-3 mb-3 shadow"
-      >
-        <FormActionButton
-          class="p-3 flex items-center"
-          white
-          :disabled="loading"
-          @click="confirmDeleteDialog?.showModal()"
-        >
-          <Icon name="hugeicons:delete-01" size="20" class="me-2" />
-          <span>حذف فرم</span>
-        </FormActionButton>
-        <FormActionButton
-          class="p-3 flex items-center"
-          @click="submitForm"
-          :disabled="loading || submitDisabled"
-        >
-          <Icon name="hugeicons:tick-01" size="20" class="me-2" />
-
-          <span>ذخیره فرم</span>
-        </FormActionButton>
+      <div class="w-[14rem]">
+        <FormDropdown
+          label="دسته بندی"
+          class="w-full"
+          :items="categoryItems"
+          v-model="model.form_type"
+          :disabled="editMode()"
+        />
       </div>
-    </template>
+    </Section>
 
-    <div class="flex flex-col items-stretch w-full gap-2">
-      <Section v-if="showErrs && checkErrors.length > 0">
-        <h1 class="text-2xl">خطا ها</h1>
-        <ul class="text-red-500 list-disc ps-5">
-          <li v-for="i in checkErrors">{{ i }}</li>
-        </ul>
-      </Section>
+    <Section v-if="model.form_type == 'public'">
+      <div class="grid grid-cols-2 grid-rows-2 gap-2 w-2/3">
+        <FormTextInput label="نام خانوادگی" disabled placeholder="پاسخ شما" />
+        <FormTextInput label="نام" disabled placeholder="پاسخ شما" />
+        <FormTextInput label="ایمیل" disabled placeholder="پاسخ شما" />
+      </div>
+    </Section>
 
-      <!-- title form -->
-      <Section class="flex items-stretch gap-3">
-        <div class="w-[18rem] space-y-3">
-          <FormTextInput
-            label="نام فرم"
-            placeholder="یک عنوان برای این فرم"
-            v-model="model.form_title"
-          />
+    <FormBuilderSection
+      v-for="(i, index) in model.sections"
+      v-model="model.sections[index]"
+      :position="
+        index == 0
+          ? model.sections.length == 1
+            ? 'just'
+            : 'first'
+          : index == model.sections.length - 1
+          ? 'last'
+          : undefined
+      "
+      :key="i.key"
+      @delete="formItemAction.delete(index)"
+      @copy="formItemAction.copy(index)"
+      @move-up="formItemAction.up(index)"
+      @move-down="formItemAction.down(index)"
+    />
 
-          <FormTextAreaInput
-            label="توضیحات فرم"
-            rows="5"
-            v-model="model.description"
-          />
-        </div>
-
-        <div class="w-[14rem]">
-          <FormDropdown
-            label="دسته بندی"
-            class="w-full"
-            :items="categoryItems"
-            v-model="model.form_type"
-            :disabled="editMode()"
-          />
-        </div>
-      </Section>
-
-      <Section v-if="model.form_type == 'public'">
-        <div class="grid grid-cols-2 grid-rows-2 gap-2 w-2/3">
-          <FormTextInput label="نام خانوادگی" disabled placeholder="پاسخ شما" />
-          <FormTextInput label="نام" disabled placeholder="پاسخ شما" />
-          <FormTextInput label="ایمیل" disabled placeholder="پاسخ شما" />
-        </div>
-      </Section>
-
-      <FormBuilderSection
-        v-for="(i, index) in model.sections"
-        v-model="model.sections[index]"
-        :position="
-          index == 0
-            ? model.sections.length == 1
-              ? 'just'
-              : 'first'
-            : index == model.sections.length - 1
-            ? 'last'
-            : undefined
-        "
-        :key="i.key"
-        @delete="formItemAction.delete(index)"
-        @copy="formItemAction.copy(index)"
-        @move-up="formItemAction.up(index)"
-        @move-down="formItemAction.down(index)"
-      />
-
-      <BouncingBtn
-        type="button"
-        class="bg-white shadow-lg rounded-xl flex items-center justify-center font-bold p-3"
-        @click="formItemAction.new"
-      >
-        + پرسش جدید
-      </BouncingBtn>
-    </div>
-
-    <dialog
-      ref="confirm-delete-dialog"
-      :class="[
-        defaultBorder,
-        'fixed bg-white top-0 left-0 py-5 px-10 max-w-lg w-full',
-      ]"
+    <BouncingBtn
+      type="button"
+      class="bg-white shadow-lg rounded-xl flex items-center justify-center font-bold p-3"
+      @click="formItemAction.new"
     >
-      آیا مطمئن هستید؟
-      <div class="flex justify-end gap-3">
-        <FormActionButton
-          white
-          class="py-2 px-5"
-          @click="
-            confirmDeleteDialog?.close();
-            $emit('delete');
-          "
-          >بله</FormActionButton
-        >
-        <FormActionButton
-          class="py-2 px-5"
-          @click="confirmDeleteDialog?.close()"
-          >خیر</FormActionButton
-        >
-      </div>
-    </dialog>
-  </LayoutDefault>
+      + پرسش جدید
+    </BouncingBtn>
+  </div>
+
+  <dialog
+    ref="confirm-delete-dialog"
+    :class="[
+      defaultBorder,
+      'fixed bg-white top-0 left-0 py-5 px-10 max-w-lg w-full',
+    ]"
+  >
+    آیا مطمئن هستید؟
+    <div class="flex justify-end gap-3">
+      <FormActionButton
+        white
+        class="py-2 px-5"
+        @click="
+          confirmDeleteDialog?.close();
+          $emit('delete');
+        "
+        >بله</FormActionButton
+      >
+      <FormActionButton class="py-2 px-5" @click="confirmDeleteDialog?.close()"
+        >خیر</FormActionButton
+      >
+    </div>
+  </dialog>
 </template>
 
 <script setup lang="ts">
