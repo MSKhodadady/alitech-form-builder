@@ -1,18 +1,22 @@
 <template>
   <Section>
-    <div class="flex justify-between w-full">
+    <div class="flex flex-col md:flex-row gap-2 justify-between w-full">
       <!--  -->
-      <div class="flex gap-2">
-        <FormTextInput placeholder="عنوان پرسش" v-model="model.title" />
+      <div class="flex flex-col sm:flex-row items-stretch gap-2">
+        <FormTextInput
+          placeholder="عنوان پرسش"
+          v-model="model.title"
+          container-class="w-full md:w-fit"
+        />
         <FormDropdown
           :items="questionTypes"
           v-model="model.type"
-          class="w-40"
+          class="sm:w-40"
         />
       </div>
       <!--  -->
-      <div class="flex gap-1 items-center">
-        <FormSwitch v-model="model.required" />
+      <div class="flex gap-1 items-center justify-between md:justify-end">
+        <FormSwitchLabel v-model="model.required" label="پاسخ الزامی" />
 
         <FormIconButton
           icon-name="hugeicons:delete-01"
@@ -47,7 +51,7 @@
         <FormTextInput
           disabled
           placeholder="پاسخ شما"
-          container-class="w-[18rem]"
+          container-class="w-full sm:w-[18rem]"
         />
       </template>
       <template v-if="model.type == 'textarea'">
@@ -91,6 +95,7 @@
 </template>
 
 <script setup lang="ts">
+import { FormSwitchLabel } from "#components";
 import type { FormBuilderSection } from "~/types/entities/FormBuilderSection";
 
 const questionTypes = [
