@@ -92,7 +92,7 @@ const pageField = ref(page.value);
 const { handleAuthFetch, loading } = useHandleAuthFetch(true);
 
 onMounted(async () => {
-  const res = await handleAuthFetch<FormsResp>(() => authApiList.getAllForms());
+  const res = await handleAuthFetch(() => authApiList.getAllForms());
 
   if (res) {
     formsData.value = res.data;

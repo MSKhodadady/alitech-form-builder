@@ -1,3 +1,5 @@
+import type { ResponseTyped } from "~/types/serverData/ResponseShape";
+
 export type FetchOptions = {
   url: string;
   method: "GET" | "POST" | "PUT" | "DELETE";
@@ -37,7 +39,9 @@ class AuthFetchQueue {
     this.#accessToken = accessToken;
   }
 
-  fetcher<T>(fetchOptions: FetchOptions) {
+  fetcher<Data = any, Err = any>(
+    fetchOptions: FetchOptions
+  ): Promise<ResponseTyped<Data, Err>> {
     if (this.#accessToken == null) throw new NotLoggedInError();
 
     return new Promise((fetchResolve: (t: Response) => void, fetchReject) => {

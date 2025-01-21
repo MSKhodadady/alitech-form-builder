@@ -6,6 +6,11 @@ export type FormsResp = ResponseShapeSuccess<{
   data: Form[];
 }>;
 
+export type Forms = {
+  totla_quantity: number;
+  data: Form[];
+};
+
 export type Form = {
   form_id: string;
   form_type: "public" | "private";

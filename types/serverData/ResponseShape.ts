@@ -9,21 +9,25 @@ export type ResponseTyped<Data = any, Err = any> = Omit<
   (
     | {
         ok: true;
-        json: () => Promise<{
-          ok: true;
-          status: number;
-          data: Data;
-        }>;
+        json: () => Promise<ResponseOk<Data>>;
       }
     | {
         ok: false;
-        json: () => Promise<{
-          ok: false;
-          status: number;
-          error: Err;
-        }>;
+        json: () => Promise<ResponseNOk<Err>>;
       }
   );
+
+export type ResponseOk<Data> = {
+  ok: true;
+  status: number;
+  data: Data;
+};
+
+export type ResponseNOk<Err> = {
+  ok: false;
+  status: number;
+  error: Err;
+};
 
 export type ResponseShape<Data = any, Err = any> =
   | {
