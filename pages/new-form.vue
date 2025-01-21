@@ -37,13 +37,13 @@ const formBuilderState = reactive<FormBuilderModel>({
 
 const { loading, handleAuthFetch, showAlert } = useHandleAuthFetch();
 
-function submitForm() {
+async function submitForm() {
   const { form_type } = formBuilderState;
 
   //: for certainty
   if (form_type != "public" && form_type != "private") return;
 
-  const res = handleAuthFetch(() =>
+  const res = await handleAuthFetch(() =>
     authApiList.createForm({
       ...formBuilderState,
       form_type,
