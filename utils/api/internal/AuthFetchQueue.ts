@@ -1,4 +1,6 @@
 import type { ResponseTyped } from "~/types/response/ResponseShape";
+import { apiErrLog, errLog } from "~/utils/error/errLog";
+import { NotLoggedInError } from "~/utils/error/NotLoggedInError";
 
 export type FetchOptions = {
   url: string;
@@ -217,14 +219,6 @@ class AuthFetchQueue {
   #clearQueue() {
     this.#queue.map((i) => i.fetchReject(new NotLoggedInError()));
     this.#queue = [];
-  }
-}
-
-export class NotLoggedInError extends Error {
-  constructor() {
-    super();
-
-    this.name = "NotLoggedInError";
   }
 }
 

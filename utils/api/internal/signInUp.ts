@@ -1,5 +1,6 @@
 import type { SignUpResponse } from "~/types/response/SignUpRes";
 import { decodeJWT } from "~/utils/data/decodeJWT";
+import { apiErrLog, errLog } from "~/utils/error/errLog";
 import { getAuthFetchQueue } from "./AuthFetchQueue";
 
 export default async function signInUp(

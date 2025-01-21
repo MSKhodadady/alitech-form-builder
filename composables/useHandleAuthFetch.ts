@@ -1,5 +1,6 @@
-import { NotLoggedInError } from "~/api/AuthFetchQueue";
 import type { ResponseOk, ResponseTyped } from "~/types/response/ResponseShape";
+import { apiErrLog, errLog } from "~/utils/error/errLog";
+import { NotLoggedInError } from "~/utils/error/NotLoggedInError";
 
 /**
  * This composable is used for handling auth api calls. It handles things like redirecting when not logged in or showing server error.
