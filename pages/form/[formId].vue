@@ -29,7 +29,13 @@ import type { EditFormBuilderModel, FromBuilder } from "~/types/FormBuilder";
 import type { Form } from "~/types/serverData/Forms";
 import type { ResponseShapeSuccess } from "~/types/serverData/ResponseShape";
 
+useHead({
+  title: "ویرایش فرم",
+});
+
 definePageMeta({
+  requiredAuth: true,
+
   validate(route) {
     const { formId } = route.params;
     return formId != undefined || !Array.isArray(formId);

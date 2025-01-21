@@ -80,6 +80,9 @@ import type { Form, FormsResp } from "~/types/serverData/Forms";
 useHead({
   title: "داشبورد",
 });
+definePageMeta({
+  requiredAuth: true,
+});
 
 const formsData = ref<FormsResp["data"] | null>(null);
 const page = ref(1);

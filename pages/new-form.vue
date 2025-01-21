@@ -22,6 +22,9 @@ import type { FormBuilderModel } from "~/types/FormBuilder";
 useHead({
   title: "ساخت فرم",
 });
+definePageMeta({
+  requiredAuth: true,
+});
 
 const formBuilderState = reactive<FormBuilderModel>({
   form_title: "",
