@@ -1,6 +1,7 @@
 <template>
   <div class="flex flex-col items-stretch w-full gap-2">
     <Section class="w-full flex gap-3 justify-end p-3 mb-3 shadow !border-none">
+      <!-- delete button, shown when editing -->
       <FormActionButton
         class="p-3 flex items-center"
         v-if="editMode()"
@@ -11,6 +12,7 @@
         <Icon name="hugeicons:delete-01" size="20" class="me-2" />
         <span>حذف فرم</span>
       </FormActionButton>
+
       <FormActionButton
         class="p-3 flex items-center"
         @click="submitForm"
@@ -21,6 +23,7 @@
         <span>ذخیره فرم</span>
       </FormActionButton>
     </Section>
+    <!-- for showing errors in forms -->
     <Section v-if="showErrs && checkErrors.length > 0">
       <h1 class="text-2xl">خطا ها</h1>
       <ul class="text-red-500 list-disc ps-5">
@@ -28,7 +31,7 @@
       </ul>
     </Section>
 
-    <!-- title form -->
+    <!-- title section -->
     <Section class="flex items-stretch gap-3">
       <div class="w-[18rem] space-y-3">
         <FormTextInput
@@ -55,6 +58,7 @@
       </div>
     </Section>
 
+    <!-- fields shown when form type if public -->
     <Section v-if="model.form_type == 'public'">
       <div class="grid grid-cols-2 grid-rows-2 gap-2 w-2/3">
         <FormTextInput label="نام خانوادگی" disabled placeholder="پاسخ شما" />
@@ -63,7 +67,8 @@
       </div>
     </Section>
 
-    <FormBuilderSection
+    <!-- each section of question -->
+    <FormBuilderQuestionSection
       v-for="(i, index) in model.sections"
       v-model="model.sections[index]"
       :position="
@@ -82,6 +87,7 @@
       @move-down="formItemAction.down(index)"
     />
 
+    <!-- adding new questions -->
     <BouncingBtn
       type="button"
       class="bg-white shadow-lg rounded-xl flex items-center justify-center font-bold p-3"
@@ -91,6 +97,7 @@
     </BouncingBtn>
   </div>
 
+  <!-- a dialog for confirming delete -->
   <dialog
     ref="confirm-delete-dialog"
     :class="[
@@ -128,18 +135,22 @@ const categoryItems = [
 useHead({
   title: "ساخت فرم",
 });
+
 const model = defineModel<FormBuilderModel>({ required: true });
 const props = defineProps<{
   formId: null | string; // if not null => edit mode
   loading?: boolean;
+  //: used in edit mode, where we disable submit because data not changed.
   submitDisabled?: boolean;
 }>();
 const emit = defineEmits(["submit", "delete"]);
-const editMode = () => props.formId != null;
+//: show errors just after first submit
 const showErrs = ref(false);
 const confirmDeleteDialog = useTemplateRef("confirm-delete-dialog");
 
-//: init model values for sure
+const editMode = () => props.formId != null;
+
+//: init model values for certainty
 onMounted(() => {
   const { description, formItemKeyCounter, form_title, form_type, sections } =
     model.value;
@@ -227,6 +238,7 @@ const checkErrors = computed(() =>
 );
 
 function submitForm() {
+  //: first check errors
   if (checkErrors.value.length > 0) {
     showErrs.value = true;
     return;

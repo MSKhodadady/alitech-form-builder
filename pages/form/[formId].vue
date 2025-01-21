@@ -25,9 +25,9 @@
 </template>
 
 <script setup lang="ts">
-import type { EditFormBuilderModel } from "~/types/components/FormBuilderModel";
+import type { FormBuilderModel } from "~/types/components/FormBuilderModel";
 import type { Form } from "~/types/entities/Form";
-import type { FromBuilder } from "~/types/entities/FormBuilder";
+import type { FromBuilder as FormBuilder } from "~/types/entities/FormBuilder";
 import { apiList } from "~/utils/api/authApiList";
 
 useHead({
@@ -50,7 +50,7 @@ const { formId } = route.params as { formId: string };
 //: `newForm` is used for mutating data.
 //: Then we can compare them to check if data changed and enable save button.
 const initForm = ref<Form | null>(null);
-const newForm = ref<EditFormBuilderModel | null>(null);
+const newForm = ref<FormBuilderModel | null>(null);
 
 const { handleAuthFetch, loading, showAlert } = useHandleAuthFetch();
 
@@ -120,9 +120,11 @@ async function onSubmit() {
   //: if not changed return
   if (newForm.value == null || notChanged.value) return;
 
-  const { formItemKeyCounter, sections, ...other } = newForm.value;
-  const body: FromBuilder = {
+  const { formItemKeyCounter, sections, form_type, ...other } = newForm.value;
+
+  const body: FormBuilder = {
     ...other,
+    form_type: form_type as "public" | "private",
     //: remove not needed `key` from sections
     sections: sections.map(({ key, ...other }) => other),
   };

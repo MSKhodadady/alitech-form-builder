@@ -1,3 +1,5 @@
+<!-- this component, used in QuestionSection, is used for questions that have multiple choices. -->
+
 <template>
   <p
     v-for="(p, index) in model"
@@ -33,6 +35,9 @@ const model = defineModel<string[]>({ required: true });
 
 const newProperty = ref("");
 
+/**
+ * Just a tiny comp for showing bullet of list, in accordance to its type.
+ */
 const BulletNode = defineComponent<{
   index: number;
   bulletType: string;
