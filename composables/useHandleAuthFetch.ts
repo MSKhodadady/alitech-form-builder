@@ -1,8 +1,5 @@
 import { NotLoggedInError } from "~/api/AuthFetchQueue";
-import type {
-  ResponseOk,
-  ResponseTyped,
-} from "~/types/serverData/ResponseShape";
+import type { ResponseOk, ResponseTyped } from "~/types/response/ResponseShape";
 
 export function useHandleAuthFetch(loadingInit = false) {
   const loading = ref(loadingInit);

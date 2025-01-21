@@ -1,15 +1,4 @@
 import type { FormBuilderSection } from "../FormBuilderSection";
-import type { ResponseShapeSuccess } from "./ResponseShape";
-
-export type FormsResp = ResponseShapeSuccess<{
-  totla_quantity: number;
-  data: Form[];
-}>;
-
-export type Forms = {
-  totla_quantity: number;
-  data: Form[];
-};
 
 export type Form = {
   form_id: string;

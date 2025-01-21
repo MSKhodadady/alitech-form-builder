@@ -75,7 +75,8 @@
 
 <script setup lang="ts">
 import { authApiList } from "~/api/authApiList";
-import type { Form, FormsResp } from "~/types/serverData/Forms";
+import type { FormsResp } from "~/types/response/Forms";
+import type { Form } from "~/types/serverData/Forms";
 
 useHead({
   title: "داشبورد",
@@ -84,7 +85,7 @@ definePageMeta({
   requiredAuth: true,
 });
 
-const formsData = ref<FormsResp["data"] | null>(null);
+const formsData = ref<FormsResp | null>(null);
 const page = ref(1);
 //: page text field for paginator
 const pageField = ref(page.value);

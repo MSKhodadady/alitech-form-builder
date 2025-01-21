@@ -1,4 +1,4 @@
-import type { ResponseTyped } from "~/types/serverData/ResponseShape";
+import type { ResponseTyped } from "~/types/response/ResponseShape";
 
 export type FetchOptions = {
   url: string;

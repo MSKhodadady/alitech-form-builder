@@ -28,27 +28,3 @@ export type ResponseNOk<Err> = {
   status: number;
   error: Err;
 };
-
-export type ResponseShape<Data = any, Err = any> =
-  | {
-      ok: true;
-      status: number;
-      data: Data;
-    }
-  | {
-      ok: false;
-      status: number;
-      error: Err;
-    };
-
-export type ResponseShapeSuccess<Data = any> = {
-  ok: true;
-  status: number;
-  data: Data;
-};
-
-export type ResponseShapeError<Err = any> = {
-  ok: false;
-  status: number;
-  error: Err;
-};
