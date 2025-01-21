@@ -16,8 +16,8 @@
 </template>
 
 <script setup lang="ts">
-import { authApiList } from "~/api/authApiList";
 import type { FormBuilderModel } from "~/types/components/FormBuilderModel";
+import { apiList } from "~/utils/api/authApiList";
 
 useHead({
   title: "ساخت فرم",
@@ -44,7 +44,7 @@ async function submitForm() {
   if (form_type != "public" && form_type != "private") return;
 
   const res = await handleAuthFetch(() =>
-    authApiList.createForm({
+    apiList.auth.createForm({
       ...formBuilderState,
       form_type,
     })

@@ -50,7 +50,7 @@
 </template>
 
 <script lang="ts" setup>
-import signInUp from "~/api/signInUp";
+import { apiList } from "~/utils/api/authApiList";
 import { emailRegex, passwordRegex } from "~/utils/layout/validation";
 
 useHead({
@@ -84,7 +84,7 @@ async function onSubmit() {
     return;
   }
 
-  const res = await signInUp(email.value, password.value);
+  const res = await apiList.signInUp(email.value, password.value);
 
   if (res == "success") {
     showAlert("شما با موفقیت وارد شدید.", "success");

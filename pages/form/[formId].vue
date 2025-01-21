@@ -25,10 +25,10 @@
 </template>
 
 <script setup lang="ts">
-import { authApiList } from "~/api/authApiList";
 import type { EditFormBuilderModel } from "~/types/components/FormBuilderModel";
 import type { Form } from "~/types/entities/Form";
 import type { FromBuilder } from "~/types/entities/FormBuilder";
+import { apiList } from "~/utils/api/authApiList";
 
 useHead({
   title: "ویرایش فرم",
@@ -56,7 +56,7 @@ const { handleAuthFetch, loading, showAlert } = useHandleAuthFetch();
 
 onMounted(async () => {
   //: fetch data
-  const f = await handleAuthFetch(() => authApiList.getForm(formId));
+  const f = await handleAuthFetch(() => apiList.auth.getForm(formId));
   if (f == undefined) {
     throw createError({
       statusCode: 404,
@@ -127,7 +127,9 @@ async function onSubmit() {
     sections: sections.map(({ key, ...other }) => other),
   };
 
-  const res = await handleAuthFetch(() => authApiList.updateForm(formId, body));
+  const res = await handleAuthFetch(() =>
+    apiList.auth.updateForm(formId, body)
+  );
 
   if (res && res.ok) {
     showAlert("تغییرات با موفقیت ذخیره شدند.", "success");
@@ -136,7 +138,7 @@ async function onSubmit() {
 }
 
 async function onDelete() {
-  const res = await handleAuthFetch(() => authApiList.deleteForm(formId));
+  const res = await handleAuthFetch(() => apiList.auth.deleteForm(formId));
 
   if (res && res.ok) {
     showAlert("فرم با موفقیت حذف شد.", "success");

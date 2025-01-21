@@ -74,9 +74,9 @@
 </template>
 
 <script setup lang="ts">
-import { authApiList } from "~/api/authApiList";
 import type { Form } from "~/types/entities/Form";
 import type { FormsResp } from "~/types/response/Forms";
+import { apiList } from "~/utils/api/authApiList";
 import { secondsToPerDateStr } from "~/utils/data/date";
 import { enNumberToPer } from "~/utils/data/numbers";
 import { defaultBorder } from "~/utils/layout/style";
@@ -96,7 +96,7 @@ const pageField = ref(page.value);
 const { handleAuthFetch, loading } = useHandleAuthFetch(true);
 
 onMounted(async () => {
-  const res = await handleAuthFetch(() => authApiList.getAllForms());
+  const res = await handleAuthFetch(() => apiList.auth.getAllForms());
 
   if (res) {
     formsData.value = res.data;

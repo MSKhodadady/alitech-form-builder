@@ -7,7 +7,7 @@
 </template>
 
 <script setup lang="ts">
-import { initAuthFetchQueue } from "./api/AuthFetchQueue";
+import { initAuthFetchQueue } from "./utils/api/internal/AuthFetchQueue";
 
 useHead({
   titleTemplate: (t) => `${t} - آلیاتک`,
