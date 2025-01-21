@@ -4,4 +4,8 @@ export default defineNuxtRouteMiddleware((to, from) => {
   if (to.meta.requiredAuth && auth.value == undefined) {
     return navigateTo(pageRoutes.login);
   }
+
+  if (to.meta.isLogin && auth.value != undefined) {
+    return navigateTo(pageRoutes.dashboard);
+  }
 });

@@ -56,6 +56,9 @@ import { emailRegex, passwordRegex } from "~/utils/layout/validation";
 useHead({
   title: "ورود",
 });
+definePageMeta({
+  isLogin: true,
+});
 
 const email = ref("");
 const password = ref("");

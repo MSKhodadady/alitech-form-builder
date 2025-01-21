@@ -1,6 +1,6 @@
 <template>
   <Section
-    class="max-w-2xl m-auto !p-10 my-10 flex flex-col items-center gap-5"
+    class="max-w-2xl m-auto !p-10 my-10 flex flex-col items-center gap-5 mx-3"
   >
     <h1 class="text-center text-3xl">خوش آمدید.</h1>
     <NuxtLink
