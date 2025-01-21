@@ -60,8 +60,10 @@ onMounted(async () => {
     authApiList.getForm(formId)
   );
   if (f == undefined) {
-    navigateTo(pageRoutes.dashboard);
-    return;
+    throw createError({
+      statusCode: 404,
+      fatal: true,
+    });
   }
 
   initForm.value = f.data;

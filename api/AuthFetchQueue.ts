@@ -89,40 +89,46 @@ class AuthFetchQueue {
 
     const endUrl = `${serverAddress}${url}`;
 
-    const res = await fetch(
-      `${endUrl}?${Object.entries(queries ?? {})
-        .map(([k, v]) => `${encodeURIComponent(k)}=${encodeURIComponent(v)}`)
-        .join("&")}`,
-      {
-        method,
-        body: body ? JSON.stringify(body) : undefined,
-        headers: {
-          ...(body != undefined ? { "Content-Type": "application/json" } : {}),
-          Authorization: `Bearer ${accessToken}`,
-        },
+    try {
+      const res = await fetch(
+        `${endUrl}?${Object.entries(queries ?? {})
+          .map(([k, v]) => `${encodeURIComponent(k)}=${encodeURIComponent(v)}`)
+          .join("&")}`,
+        {
+          method,
+          body: body ? JSON.stringify(body) : undefined,
+          headers: {
+            ...(body != undefined
+              ? { "Content-Type": "application/json" }
+              : {}),
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
+
+      if (res.status == 403) {
+        const newAccessToken = await this.#refreshToken();
+
+        if (newAccessToken == "not-logged-in") {
+          fetchReject(new NotLoggedInError());
+          this.#clearQueue();
+          return;
+        }
+
+        if (newAccessToken == "error") {
+          fetchReject(new Error("error fetching access token"));
+          return;
+        }
+
+        this.#accessToken = newAccessToken.access;
+
+        await this.#fetchResolver(P);
+      } else {
+        fetchResolve(res);
+        this.#log(`end resolving fetch ${method}:${url}`);
       }
-    );
-
-    if (res.status == 403) {
-      const newAccessToken = await this.#refreshToken();
-
-      if (newAccessToken == "not-logged-in") {
-        fetchReject(new NotLoggedInError());
-        this.#clearQueue();
-        return;
-      }
-
-      if (newAccessToken == "error") {
-        fetchReject(new Error("error fetching access token"));
-        return;
-      }
-
-      this.#accessToken = newAccessToken.access;
-
-      await this.#fetchResolver(P);
-    } else {
-      fetchResolve(res);
-      this.#log(`end resolving fetch ${method}:${url}`);
+    } catch (error) {
+      fetchReject(error);
     }
   }
 
