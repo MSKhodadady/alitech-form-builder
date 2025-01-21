@@ -1,4 +1,4 @@
-import type { Form } from "../serverData/Forms";
+import type { Form } from "../entities/Form";
 
 export type FormsResp = {
   totla_quantity: number;

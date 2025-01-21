@@ -92,7 +92,7 @@
 
 <script setup lang="ts">
 import { Section as AppSection } from "#components";
-import type { FormBuilderSection } from "~/types/FormBuilderSection";
+import type { FormBuilderSection } from "~/types/entities/FormBuilderSection";
 
 const questionTypes = [
   { text: "پاسخ کوتاه", id: "text" },

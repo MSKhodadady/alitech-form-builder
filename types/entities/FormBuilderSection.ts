@@ -5,7 +5,10 @@ export type FormBuilderSection = {
   properties: string[];
 };
 
-export type FormBuilderSectionType =
+/**
+ * just for informing
+ */
+type FormBuilderSectionType =
   | "text"
   | "textarea"
   | "radio"

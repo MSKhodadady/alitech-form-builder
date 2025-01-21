@@ -1,6 +1,7 @@
-import type { FromBuilder } from "~/types/FormBuilder";
 import type { FormsResp } from "~/types/response/Forms";
-import type { Form } from "~/types/serverData/Forms";
+
+import type { Form } from "~/types/entities/Form";
+import type { FromBuilder } from "~/types/entities/FormBuilder";
 import { getAuthFetchQueue } from "./AuthFetchQueue";
 
 /**

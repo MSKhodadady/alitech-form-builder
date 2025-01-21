@@ -1,4 +1,4 @@
-import type { FormBuilderSection } from "../FormBuilderSection";
+import type { FormBuilderSection } from "./FormBuilderSection";
 
 export type Form = {
   form_id: string;

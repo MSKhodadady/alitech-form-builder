@@ -76,7 +76,7 @@
 <script setup lang="ts">
 import { authApiList } from "~/api/authApiList";
 import type { FormsResp } from "~/types/response/Forms";
-import type { Form } from "~/types/serverData/Forms";
+import type { Form } from "~/types/enitities/Forms";
 
 useHead({
   title: "داشبورد",
