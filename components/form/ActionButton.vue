@@ -12,6 +12,8 @@
 </template>
 
 <script setup lang="ts">
+import { defaultBorder } from "~/utils/layout/style";
+
 defineProps<{
   disabled?: boolean;
   white?: boolean;

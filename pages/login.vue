@@ -51,6 +51,7 @@
 
 <script lang="ts" setup>
 import signInUp from "~/api/signInUp";
+import { emailRegex, passwordRegex } from "~/utils/layout/validation";
 
 useHead({
   title: "ورود",

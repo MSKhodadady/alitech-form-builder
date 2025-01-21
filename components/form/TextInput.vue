@@ -35,6 +35,7 @@
 
 <script lang="ts" setup>
 import type { InputTypeHTMLAttribute } from "vue";
+import { defaultBorder } from "~/utils/layout/style";
 
 defineOptions({
   inheritAttrs: false,

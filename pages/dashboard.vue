@@ -75,8 +75,11 @@
 
 <script setup lang="ts">
 import { authApiList } from "~/api/authApiList";
+import type { Form } from "~/types/entities/Form";
 import type { FormsResp } from "~/types/response/Forms";
-import type { Form } from "~/types/enitities/Forms";
+import { secondsToPerDateStr } from "~/utils/data/date";
+import { enNumberToPer } from "~/utils/data/numbers";
+import { defaultBorder } from "~/utils/layout/style";
 
 useHead({
   title: "داشبورد",

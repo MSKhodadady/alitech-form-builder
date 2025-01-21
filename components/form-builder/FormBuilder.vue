@@ -118,6 +118,7 @@
 
 <script setup lang="ts">
 import type { FormBuilderModel } from "~/types/components/FormBuilderModel";
+import { defaultBorder } from "~/utils/layout/style";
 
 const categoryItems = [
   { text: "عمومی", id: "public" },
