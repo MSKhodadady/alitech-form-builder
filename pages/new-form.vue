@@ -17,7 +17,7 @@
 
 <script setup lang="ts">
 import { authApiList } from "~/api/authApiList";
-import type { FormBuilderModel } from "~/types/FormBuilder";
+import type { FormBuilderModel } from "~/types/components/FormBuilderModel";
 
 useHead({
   title: "ساخت فرم",

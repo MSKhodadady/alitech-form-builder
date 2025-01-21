@@ -26,9 +26,9 @@
 
 <script setup lang="ts">
 import { authApiList } from "~/api/authApiList";
+import type { EditFormBuilderModel } from "~/types/components/FormBuilderModel";
 import type { Form } from "~/types/entities/Form";
 import type { FromBuilder } from "~/types/entities/FormBuilder";
-import type { EditFormBuilderModel } from "~/types/FormBuilder";
 
 useHead({
   title: "ویرایش فرم",

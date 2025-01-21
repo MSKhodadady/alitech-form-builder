@@ -1,4 +1,4 @@
-import type { AlertTypes } from "~/types/AlertTypes";
+import type { AlertTypes } from "~/types/components/AlertTypes";
 
 export function useAlert() {
   const alertProps = reactive({

@@ -1,4 +1,4 @@
-import type { FormBuilderSection } from "./entities/FormBuilderSection";
+import type { FormBuilderSection } from "../entities/FormBuilderSection";
 
 export type FormBuilderModel = {
   form_title: string;

@@ -117,7 +117,7 @@
 </template>
 
 <script setup lang="ts">
-import type { FormBuilderModel } from "~/types/FormBuilder";
+import type { FormBuilderModel } from "~/types/components/FormBuilderModel";
 
 const categoryItems = [
   { text: "عمومی", id: "public" },
