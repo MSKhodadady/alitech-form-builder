@@ -32,8 +32,8 @@
     </Section>
 
     <!-- title section -->
-    <Section class="flex items-stretch gap-3">
-      <div class="w-[18rem] space-y-3">
+    <Section class="flex flex-col gap-3 sm:flex-row">
+      <div class="w-full sm:w-[18rem] space-y-3">
         <FormTextInput
           label="نام فرم"
           placeholder="یک عنوان برای این فرم"
@@ -47,7 +47,7 @@
         />
       </div>
 
-      <div class="w-[14rem]">
+      <div class="w-full sm:w-[14rem]">
         <FormDropdown
           label="دسته بندی"
           class="w-full"
@@ -60,7 +60,7 @@
 
     <!-- fields shown when form type if public -->
     <Section v-if="model.form_type == 'public'">
-      <div class="grid grid-cols-2 grid-rows-2 gap-2 w-2/3">
+      <div class="grid grid-cols-1 gap-2 w-full sm:grid-cols-2 sm:w-2/3">
         <FormTextInput label="نام خانوادگی" disabled placeholder="پاسخ شما" />
         <FormTextInput label="نام" disabled placeholder="پاسخ شما" />
         <FormTextInput label="ایمیل" disabled placeholder="پاسخ شما" />
@@ -106,7 +106,7 @@
     ]"
   >
     آیا مطمئن هستید؟
-    <div class="flex justify-end gap-3">
+    <div class="flex justify-end gap-3 mx-3">
       <FormActionButton
         white
         class="py-2 px-5"
