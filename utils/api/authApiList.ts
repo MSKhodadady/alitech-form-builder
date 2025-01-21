@@ -1,14 +1,16 @@
-import type { FormsResp } from "~/types/response/Forms";
-
 import type { Form } from "~/types/entities/Form";
 import type { FromBuilder } from "~/types/entities/FormBuilder";
+import type { FormsResp } from "~/types/response/Forms";
 import { getAuthFetchQueue } from "./internal/AuthFetchQueue";
 import signInUp from "./internal/signInUp";
 
-/**
- * Wrap this functions in `useHandleAuthFetch` when using them.
- */
 export const apiList = {
+  /**
+   * Wrap this functions in `useHandleAuthFetch` when using them.
+   *
+   * For adding new apis to list, just call `getAuthFetchQueue().fetcher<T>`,
+   * where `T` is the data returned by that api in default shap of data. If omitted, data is `any`.
+   */
   auth: {
     getAllForms() {
       return getAuthFetchQueue().fetcher<FormsResp>({

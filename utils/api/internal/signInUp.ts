@@ -2,7 +2,10 @@ import type { SignUpResponse } from "~/types/response/SignUpRes";
 import { decodeJWT } from "~/utils/data/decodeJWT";
 import { getAuthFetchQueue } from "./AuthFetchQueue";
 
-export default async function signInUp(email: string, password: string) {
+export default async function signInUp(
+  email: string,
+  password: string
+): Promise<"success" | "password-err" | "server-err"> {
   const {
     public: { serverAddress },
   } = useRuntimeConfig();
@@ -27,16 +30,21 @@ export default async function signInUp(email: string, password: string) {
         data: { access, refresh },
       } = await res.json();
 
+      //: extract expire time from jwt.
       const refreshTokenData = decodeJWT(refresh);
       const exp = Number(refreshTokenData.body.exp);
 
+      //: save refresh token in cookie
       const refreshCookie = useCookie(REFRESH_TOKEN_KEY, {
         expires: !Number.isNaN(exp) ? new Date(exp * 1000) : undefined,
       });
-
       refreshCookie.value = refresh;
 
+      //: we must save refresh token in `localStorage`,
+      //: because of server api problem.
       localStorage.setItem(REFRESH_TOKEN_KEY, refresh);
+
+      //: save refresh token both in localStorage and AuthFetchQueue for ease of use.
       localStorage.setItem(ACCESS_TOKEN_KEY, access);
       getAuthFetchQueue().setAccessToken(access);
 

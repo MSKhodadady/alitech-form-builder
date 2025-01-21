@@ -1,3 +1,6 @@
+/**
+ * Extract parts of data in a jwt token
+ */
 export function decodeJWT(jwtToken: string) {
   const arr = jwtToken.split(".");
 

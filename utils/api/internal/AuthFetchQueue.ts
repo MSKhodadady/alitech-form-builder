@@ -13,6 +13,13 @@ type QueueItem = {
   fetchReject: (reason: any) => void;
 };
 
+/**
+ * This is class is just a queue for fetch actions,
+ * for doing fetch actions in order and if some fetch faced 403,
+ * automatically fetches new access token once for that fetch and fetches coming after that.
+ *
+ * Only one queue must be used, so use this class with `Singleton` pattern.
+ */
 class AuthFetchQueue {
   #queue: QueueItem[] = [];
   #isProcessing = false;
@@ -20,6 +27,9 @@ class AuthFetchQueue {
   #accessToken: string | null = null;
   #logEnabled = false;
 
+  /**
+   * @param logEnabled If you want to log this class actions.
+   */
   constructor(logEnabled = false) {
     const {
       public: { serverAddress },
@@ -35,10 +45,19 @@ class AuthFetchQueue {
     console.log(`AuthFetchQueue initiated!`);
   }
 
+  /**
+   * Call it after login, to set `access token` for this class.
+   * This is just for easier access to `access` token, so we don't have to get from `localStorage` every time.
+   * @note There is no problem with page refresh, because in `constructor` function, we read `access token` from `localStorage`.
+   */
   setAccessToken(accessToken: string) {
     this.#accessToken = accessToken;
   }
 
+  /**
+   * Call this function for fetching, and just `await` for result.
+   * This function puts the request in queue, and queue processes the req and resolves the result.
+   */
   fetcher<Data = any, Err = any>(
     fetchOptions: FetchOptions
   ): Promise<ResponseTyped<Data, Err>> {
@@ -48,6 +67,7 @@ class AuthFetchQueue {
       this.#queue.push({ fetchOptions, fetchResolve, fetchReject });
 
       this.#log(`added to queue - ${fetchOptions.method}:${fetchOptions.url}`);
+      //: Start the process queue if not started.
       this.#processQueue();
     });
   }
@@ -58,6 +78,9 @@ class AuthFetchQueue {
     }
   }
 
+  /**
+   * Picks fetch request one by one and resolves them.
+   */
   async #fetchQueueResolver() {
     if (this.#isProcessing || this.#queue.length === 0) {
       return;
@@ -75,6 +98,10 @@ class AuthFetchQueue {
     this.#log(`stop resolving queue`);
   }
 
+  /**
+   * Resolver function for every fetch req.
+   * If the fetch encountered 403, it fetches access token also.
+   */
   async #fetchResolver(P: QueueItem) {
     const serverAddress = this.#serverAddress;
     const accessToken = this.#accessToken;
@@ -110,9 +137,11 @@ class AuthFetchQueue {
         }
       );
 
+      //: me must fetch access token
       if (res.status == 403) {
         const newAccessToken = await this.#refreshToken();
 
+        //: refresh token expired
         if (newAccessToken == "not-logged-in") {
           fetchReject(new NotLoggedInError());
           this.#clearQueue();
@@ -136,12 +165,19 @@ class AuthFetchQueue {
     }
   }
 
+  /**
+   * Start the process queue if not started.
+   */
   #processQueue() {
     if (!this.#isProcessing) {
       this.#fetchQueueResolver();
     }
   }
 
+  /**
+   * fetches the access token
+   * @returns access token
+   */
   async #refreshToken(): Promise<
     "error" | "not-logged-in" | { access: string }
   > {
@@ -175,9 +211,11 @@ class AuthFetchQueue {
     }
   }
 
+  /**
+   * Clear the queue if access token is expired.
+   */
   #clearQueue() {
     this.#queue.map((i) => i.fetchReject(new NotLoggedInError()));
-
     this.#queue = [];
   }
 }
@@ -190,8 +228,15 @@ export class NotLoggedInError extends Error {
   }
 }
 
+/**
+ * This variable, is for using AuthFetchQueue in singleton way.
+ */
 let __global__authFetchQueue: undefined | AuthFetchQueue = undefined;
 
+/**
+ * Calling this function is not necessary but is better.
+ * Also you can set `authFetchLog` to true if you want to enable log.
+ */
 export function initAuthFetchQueue(authFetchLog: boolean = false) {
   if (__global__authFetchQueue == undefined) {
     __global__authFetchQueue = new AuthFetchQueue(authFetchLog);
@@ -199,6 +244,9 @@ export function initAuthFetchQueue(authFetchLog: boolean = false) {
   return __global__authFetchQueue;
 }
 
+/**
+ * Call this function to get AuthFetchQueue singleton.
+ */
 export function getAuthFetchQueue() {
   return initAuthFetchQueue();
 }
