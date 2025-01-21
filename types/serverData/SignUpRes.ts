@@ -1,10 +1,11 @@
-import type { ResponseShapeError, ResponseShapeSuccess } from "./ResponseShape";
+import type { ResponseTyped } from "./ResponseShape";
 
-export type SignUpRes = ResponseShapeSuccess<{
-  access: string;
-  refresh: string;
-}>;
-
-export type SignUpResErr = ResponseShapeError<{
-  detail: "IncorrectPassword" | string;
-}>;
+export type SignUpResponse = ResponseTyped<
+  {
+    access: string;
+    refresh: string;
+  },
+  {
+    detail: "IncorrectPassword" | string;
+  }
+>;

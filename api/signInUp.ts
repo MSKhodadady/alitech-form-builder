@@ -1,4 +1,4 @@
-import type { SignUpRes, SignUpResErr } from "~/types/serverData/SignUpRes";
+import type { SignUpResponse } from "~/types/serverData/SignUpRes";
 import { getAuthFetchQueue } from "./AuthFetchQueue";
 
 export default async function signInUp(email: string, password: string) {
@@ -13,7 +13,7 @@ export default async function signInUp(email: string, password: string) {
   });
 
   try {
-    const res = await fetch(url, {
+    const res: SignUpResponse = await fetch(url, {
       method: "POST",
       body,
       headers: {
@@ -24,7 +24,7 @@ export default async function signInUp(email: string, password: string) {
     if (res.ok) {
       const {
         data: { access, refresh },
-      }: SignUpRes = await res.json();
+      } = await res.json();
 
       const refreshTokenData = decodeJWT(refresh);
       const exp = Number(refreshTokenData.body.exp);
@@ -41,8 +41,7 @@ export default async function signInUp(email: string, password: string) {
 
       return "success";
     } else {
-      const body: SignUpResErr = await res.json();
-
+      const body = await res.json();
       if (body.error.detail == "IncorrectPassword") {
         return "password-err";
       } else {
