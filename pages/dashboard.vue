@@ -31,7 +31,7 @@
       </div>
 
       <template v-else>
-        <div class="grid grid-cols-3 gap-3">
+        <div class="flex flex-col md:grid md:grid-cols-2 lg:grid-cols-3 gap-3">
           <FormBuilderCard
             v-for="i in currentPageData"
             :key="i.form_id"
@@ -44,7 +44,7 @@
 
         <div
           v-if="totalPages > 1"
-          class="flex items-center justify-center gap-8"
+          class="flex items-center justify-center gap-5 md:gap-8"
         >
           <FormIconButton
             icon-name="hugeicons:arrow-right-01"
