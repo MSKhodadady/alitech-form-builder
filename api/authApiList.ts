@@ -1,5 +1,5 @@
 import type { FromBuilder } from "~/types/FormBuilder";
-import type { Forms } from "~/types/serverData/Forms";
+import type { Form, Forms } from "~/types/serverData/Forms";
 import { getAuthFetchQueue } from "./AuthFetchQueue";
 
 /**
@@ -22,7 +22,7 @@ export const authApiList = {
   },
 
   getForm(form_id: string) {
-    return getAuthFetchQueue().fetcher({
+    return getAuthFetchQueue().fetcher<Form>({
       url: "/main/main/form",
       method: "GET",
       queries: { form_id },

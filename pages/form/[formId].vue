@@ -28,7 +28,6 @@
 import { authApiList } from "~/api/authApiList";
 import type { EditFormBuilderModel, FromBuilder } from "~/types/FormBuilder";
 import type { Form } from "~/types/serverData/Forms";
-import type { ResponseShapeSuccess } from "~/types/serverData/ResponseShape";
 
 useHead({
   title: "ویرایش فرم",
@@ -56,9 +55,7 @@ const { handleAuthFetch, loading, showAlert } = useHandleAuthFetch();
 
 onMounted(async () => {
   //: fetch data
-  const f = await handleAuthFetch<ResponseShapeSuccess<Form>>(() =>
-    authApiList.getForm(formId)
-  );
+  const f = await handleAuthFetch(() => authApiList.getForm(formId));
   if (f == undefined) {
     throw createError({
       statusCode: 404,
@@ -129,9 +126,7 @@ async function onSubmit() {
     sections: sections.map(({ key, ...other }) => other),
   };
 
-  const res = await handleAuthFetch<ResponseShapeSuccess>(() =>
-    authApiList.updateForm(formId, body)
-  );
+  const res = await handleAuthFetch(() => authApiList.updateForm(formId, body));
 
   if (res && res.ok) {
     showAlert("تغییرات با موفقیت ذخیره شدند.", "success");
@@ -140,9 +135,7 @@ async function onSubmit() {
 }
 
 async function onDelete() {
-  const res = await handleAuthFetch<ResponseShapeSuccess>(() =>
-    authApiList.deleteForm(formId)
-  );
+  const res = await handleAuthFetch(() => authApiList.deleteForm(formId));
 
   if (res && res.ok) {
     showAlert("فرم با موفقیت حذف شد.", "success");
