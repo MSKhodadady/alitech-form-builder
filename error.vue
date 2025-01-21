@@ -1,7 +1,7 @@
 <template>
   <div
     dir="rtl"
-    class="bg-[#f9eff0] min-h-screen app-font flex flex-col gap-8 justify-center items-center !p-10 w-full"
+    class="bg-app-back min-h-screen app-font flex flex-col gap-8 justify-center items-center !p-10 w-full"
   >
     <h1 v-if="error?.statusCode == 404" class="text-3xl">
       صفحه مورد نظر یافت نشد.

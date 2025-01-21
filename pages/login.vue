@@ -4,7 +4,7 @@
       class="bg-white rounded-xl max-w-sm w-full py-10 px-8 shadow-md font-bold mx-3"
       @submit.prevent="onSubmit"
     >
-      <h1 class="text-2xl text-[#300030]">خوش آمدید</h1>
+      <h1 class="text-2xl text-header">خوش آمدید</h1>
 
       <p class="text-slate-400 mt-4 mb-6">
         برای ورود، ایمیل و رمز عبور خود را وارد کنید.

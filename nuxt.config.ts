@@ -8,7 +8,21 @@ export default defineNuxtConfig({
       serverAddress: "https://interview.cetri.ir",
     },
   },
-  tailwindcss: { config: {}, editorSupport: { autocompleteUtil: true } },
+  tailwindcss: {
+    config: {
+      theme: {
+        extend: {
+          colors: {
+            "app-back": "#f9eff0",
+            primary: "#3e3e3e",
+            secondary: "#da745d",
+            header: "#300030",
+          },
+        },
+      },
+    },
+    editorSupport: { autocompleteUtil: true },
+  },
 
   modules: ["@nuxtjs/tailwindcss", "@nuxt/fonts", "@nuxt/icon", "@pinia/nuxt"],
 });

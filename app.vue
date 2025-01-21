@@ -1,5 +1,5 @@
 <template>
-  <div dir="rtl" class="bg-[#f9eff0] min-h-screen h-fit overflow-auto app-font">
+  <div dir="rtl" class="bg-app-back min-h-screen h-fit overflow-auto app-font">
     <NuxtRouteAnnouncer />
     <NuxtPage />
     <Alert />

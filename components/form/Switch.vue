@@ -3,7 +3,7 @@
     :class="[
       'p-1 rounded-full flex items-center w-10 transition-all',
       model
-        ? 'shadow bg-[#da745d] text-[#da745d] justify-end '
+        ? 'shadow bg-secondary text-secondary justify-end '
         : 'bg-gray-200 text-gray-200 shadow-inner justify-start',
     ]"
     @click="model = !model"
