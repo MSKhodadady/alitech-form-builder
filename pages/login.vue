@@ -61,14 +61,15 @@ const password = ref("");
 const emailErr = ref("");
 const passwordErr = ref("");
 
-const requiredText = "لازم است.";
-
 const { showAlert } = useAlertStore();
 
 async function onSubmit() {
   emailErr.value = "";
   passwordErr.value = "";
 
+  const requiredText = "لازم است.";
+
+  //: fill err texts
   if (email.value == "") emailErr.value = requiredText;
   else if (!emailRegex.test(email.value)) emailErr.value = "صحیح نیست.";
 
@@ -77,6 +78,7 @@ async function onSubmit() {
     passwordErr.value =
       "پسورد باید حداقل ۸ کاراکتر شامل حروف کوچک و بزرگ، عدد و نماد باشد.";
 
+  //: if we have err text, we have err, so return
   if (emailErr.value != "" || passwordErr.value != "") {
     return;
   }
@@ -93,6 +95,7 @@ async function onSubmit() {
   }
 }
 
+//: if one of email or password changed, clear errors.
 watch([email, password], () => {
   emailErr.value = "";
   passwordErr.value = "";

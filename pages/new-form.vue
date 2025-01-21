@@ -26,6 +26,7 @@ definePageMeta({
   requiredAuth: true,
 });
 
+//: init state for FormBuilder model
 const formBuilderState = reactive<FormBuilderModel>({
   form_title: "",
   description: "",
@@ -38,6 +39,8 @@ const { loading, handleAuthFetch, showAlert } = useHandleAuthFetch();
 
 function submitForm() {
   const { form_type } = formBuilderState;
+
+  //: for certainty
   if (form_type != "public" && form_type != "private") return;
 
   const res = handleAuthFetch(() =>
