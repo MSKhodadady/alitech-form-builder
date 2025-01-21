@@ -1,6 +1,14 @@
 import { NotLoggedInError } from "~/api/AuthFetchQueue";
 import type { ResponseOk, ResponseTyped } from "~/types/response/ResponseShape";
 
+/**
+ * This composable is used for handling auth api calls. It handles things like redirecting when not logged in or showing server error.
+ * Use this hook in conjunction with `apiList.auth`.
+ * @param loadingInit useful for pages that fetch data onMount, to show loading page coming up
+ * @returns `handleAuthFetch` give the fetch as a function to it to do the things.
+ * @returns `loading` for showing loading in place you want while fetching.
+ * @returns `showAlert` help for you not to `useAlertStore` twice.
+ */
 export function useHandleAuthFetch(loadingInit = false) {
   const loading = ref(loadingInit);
   const { showAlert } = useAlertStore();

@@ -1,3 +1,5 @@
+<!-- Alert viewer. Use it once in root component (`app.vue` for example) and show it with `useAlertStore`. -->
+
 <template>
   <div
     class="bg-white rounded-xl shadow-md overflow-clip fixed bottom-0 right-0 m-5 z-[1000]"
