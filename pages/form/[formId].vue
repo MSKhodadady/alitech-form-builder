@@ -6,6 +6,7 @@
       </div>
     </template>
     <template #default>
+      <!-- if data loaded -->
       <template v-if="newForm">
         <FormBuilder
           v-model="newForm"
@@ -32,7 +33,6 @@ import type { ResponseShapeSuccess } from "~/types/serverData/ResponseShape";
 useHead({
   title: "ویرایش فرم",
 });
-
 definePageMeta({
   requiredAuth: true,
 
@@ -42,19 +42,23 @@ definePageMeta({
   },
 });
 
+//: read formId
 const route = useRoute();
 const { formId } = route.params as { formId: string };
 
+//: data fetched from server written into `initForm`.
+//: `newForm` is used for mutating data.
+//: Then we can compare them to check if data changed and enable save button.
 const initForm = ref<Form | null>(null);
 const newForm = ref<EditFormBuilderModel | null>(null);
 
 const { handleAuthFetch, loading, showAlert } = useHandleAuthFetch();
 
 onMounted(async () => {
+  //: fetch data
   const f = await handleAuthFetch<ResponseShapeSuccess<Form>>(() =>
     authApiList.getForm(formId)
   );
-
   if (f == undefined) {
     navigateTo(pageRoutes.dashboard);
     return;
@@ -62,16 +66,20 @@ onMounted(async () => {
 
   initForm.value = f.data;
 
+  //: calculate newForm based on `FormBuilder` model
   const { form_title, description, form_type, sections } = f.data;
   newForm.value = {
     form_title,
     description,
     form_type,
+    //: each section must have key for render vue-list.
+    //: refer to FormBuilder model to for more info.
     sections: sections.map((i, index) => ({ ...i, key: index })),
     formItemKeyCounter: sections.length,
   };
 });
 
+//: checker for data changed.
 const notChanged = computed(() => {
   if (initForm.value == null || newForm.value == null) {
     return false;
@@ -91,13 +99,17 @@ const notChanged = computed(() => {
   return (
     aTitle == bTitle &&
     aDesc == bDesc &&
+    //: compare sections
+    //: length must be equal
     aSec.length == bSec.length &&
+    //: every section from A must have some section in B equal to it.
     aSec.every((i) =>
       bSec.some(
         (j) =>
           i.title == j.title &&
           i.required == j.required &&
           i.type == j.type &&
+          //: every prop in i must have equal prop in j equal to it.
           i.properties.every((k) => j.properties.some((l) => k == l))
       )
     )
@@ -105,11 +117,13 @@ const notChanged = computed(() => {
 });
 
 async function onSubmit() {
+  //: if not changed return
   if (newForm.value == null || notChanged.value) return;
 
   const { formItemKeyCounter, sections, ...other } = newForm.value;
   const body: FromBuilder = {
     ...other,
+    //: remove not needed `key` from sections
     sections: sections.map(({ key, ...other }) => other),
   };
 
